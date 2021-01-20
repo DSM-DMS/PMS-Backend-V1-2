@@ -8,12 +8,12 @@ const port: string = process.env.PORT || "3000";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(port);
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
     transform: true,
   }));
+  await app.listen(port);
   Logger.log(`server on ${port}`, "Bootstrap");
 }
 bootstrap();
