@@ -2,13 +2,18 @@ import "dotenv/config";
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 
 const port: string = process.env.PORT || "3000";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen(port);
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
+  }));
   Logger.log(`server on ${port}`, "Bootstrap");
 }
 bootstrap();
