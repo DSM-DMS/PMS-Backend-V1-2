@@ -14,7 +14,7 @@ export class HttpErrorFilter implements ExceptionFilter {
     const context = host.switchToHttp();
     const request: Request = context.getRequest();
     const response: Response = context.getResponse();
-    const status: number = exception.getStatus()
+    const status: number = exception.getStatus
       ? exception.getStatus()
       : HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -23,7 +23,7 @@ export class HttpErrorFilter implements ExceptionFilter {
       timestamp: new Date().toLocaleDateString(),
       path: request.url,
       method: request.method,
-      message: exception.message || "Internal server error",
+      message: status !== HttpStatus.INTERNAL_SERVER_ERROR ? exception.message : "Interal server error",
     };
 
     Logger.error(
