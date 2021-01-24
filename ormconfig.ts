@@ -15,7 +15,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.TEST_DATABASE_NAME,
     synchronize: true,
     logging: false,
-    entities: ["./dist/**/*.entity.js"],
+    entities: ["./dist/**/*.entity.js", "./src/**/*.entity.ts"],
   },
   development: {
     type: "mysql",
