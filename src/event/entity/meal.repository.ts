@@ -1,6 +1,6 @@
 import { BadRequestException } from "@nestjs/common";
 import { EntityRepository, getCustomRepository, QueryRunner, Repository } from "typeorm";
-import { MealCrawlDto } from "../event.meal.dto";
+import { MealCrawlDto, MealResponseData } from "../event.meal.dto";
 import { Meal } from "./meal.entity";
 
 @EntityRepository(Meal)
@@ -20,8 +20,8 @@ export class MealRepository extends Repository<Meal> {
     }
   }
 
-  public async getOneByDatetimeWithPicture(datetime: string): Promise<Meal> {
-    const meal: Meal = await this.createQueryBuilder("meal")
+  public async getOneByDatetimeWithPicture(datetime: string): Promise<MealResponseData> {
+    const meal: MealResponseData = await this.createQueryBuilder("meal")
     .select("meal.breakfast_img", "breakfast")
     .addSelect("meal.lunch_img", "lunch")
     .addSelect("meal.dinner_img", "dinner")
