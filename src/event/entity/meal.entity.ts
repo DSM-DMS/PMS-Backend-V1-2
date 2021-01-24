@@ -5,24 +5,24 @@ export class Meal {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 15 })
+  @Column({ length: 15, unique: true })
   datetime: string;
 
-  @Column()
+  @Column({ default: "" })
   breakfast_img: string;
 
-  @Column()
+  @Column({ default: "" })
   lunch_img: string;
 
-  @Column()
+  @Column({ default: "" })
   dinner_img: string;
 
-  @Column()
+  @Column({ default: "" })
   breakfast_list: string;
 
-  @Column()
+  @Column({ default: "" })
   lunch_list: string;
 
-  @Column()
+  @Column({ default: "" })
   dinner_list: string;
 }
