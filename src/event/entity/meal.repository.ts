@@ -1,3 +1,4 @@
+import { BadRequestException } from "@nestjs/common";
 import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import { Meal } from "./meal.entity";
 
@@ -7,9 +8,17 @@ export class MealRepository extends Repository<Meal> {
     return getCustomRepository(MealRepository);
   }
 
-  public getOneByDatetime(datetime: string): Promise<Meal> {
-    return this.createQueryBuilder("meal")
+  public async getOneByDatetimeWithPicture(datetime: string): Promise<Meal> {
+    const meal: Meal = await this.createQueryBuilder("meal")
+    .select("meal.breakfast_img", "breakfast")
+    .addSelect("meal.lunch_img", "lunch")
+    .addSelect("meal.dinner_img", "dinner")
     .where("meal.datetime = :datetime", { datetime })
-    .getOne();
+    .getRawOne();
+    if(!meal) {
+      throw new BadRequestException("Not found meal pictures");
+    } else {
+      return meal;
+    }
   }
 }
