@@ -34,22 +34,18 @@ export class MealRepository extends Repository<Meal> {
     }
   }
 
-  public async setCrawlingData(mealDto: MealCrawlDto) {
-    const queryRunner: QueryRunner = this.queryRunner;
-    await queryRunner.startTransaction();
-    this.newMeal = new Meal();
-    try {
+  public async setCrawlingData(mealDto: MealCrawlDto): Promise<Meal> {
+    this.newMeal = await this.findOne({ where: { datetime: mealDto.date } });
+    if(this.newMeal && this.newMeal.breakfast_img && this.newMeal.dinner_img && this.newMeal.lunch_img) {
+      return this.newMeal;
+    } else if(this.newMeal) {
+      await this.setCorrectColumn(mealDto);
+      return await this.manager.save(this.newMeal);
+    } else {
+      this.newMeal = new Meal();
       this.newMeal.datetime = mealDto.date;
       await this.setCorrectColumn(mealDto);
-      queryRunner.manager.save(this.newMeal);
-      await queryRunner.commitTransaction();
-    } catch(err) {
-      const meal: Meal = await this.findOne({ where: { datetime: mealDto.date } });
-      this.newMeal = meal;
-      await this.setCorrectColumn(mealDto);
-      await queryRunner.manager.save(this.newMeal);
-    } finally {
-      await queryRunner.release();
+      return await this.manager.save(this.newMeal);
     }
   }
 }
