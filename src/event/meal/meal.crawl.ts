@@ -1,5 +1,7 @@
+import { Logger } from "@nestjs/common";
 import axios from "axios";
 import * as cheerie from "cheerio";
+import { MealRepository } from "./entity/meal.repository";
 import { MealCrawlDto } from "./meal.dto";
 import { AbstractGetMealDateFactory } from "./meal.type";
 
@@ -54,6 +56,16 @@ export class CrwalingMealDataFactory extends AbstractGetMealDateFactory {
       date: mealTitles[startIndex], 
       url: `${this.DSMHS_URL}${await this.getImageSrc(boardSeq, 1)}`,
       time: mealTitles[startIndex].match(/.식/g)[0],
+    }
+  }
+
+  public async setLetestMeal(meal: MealCrawlDto): Promise<boolean> {
+    try {
+      await MealRepository.getQueryRepository().setCrawlingData(meal);
+      return true;
+    } catch(err) {
+      Logger.error(err);
+      return false;
     }
   }
 }
