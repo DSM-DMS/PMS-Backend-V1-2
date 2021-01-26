@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerie from "cheerio";
+import { MealRepository } from "./entity/meal.repository";
 import { MealCrawlDto } from "./event.meal.dto";
 
 const DSMHS_URL: string = `https://dsmhs.djsch.kr`;
@@ -11,14 +12,13 @@ function numberPad(n: string, width: number): string {
 
 async function deserializeAndSaveMealData(meals: MealCrawlDto[]): Promise<void> {
   const year: number = (new Date()).getFullYear();
-  meals.forEach((meal: MealCrawlDto) => {
+  for(let meal of meals) {
     const monthAndDay: string[] = meal.date.match(/[0-9]+/g);
     const time: string[] = meal.date.match(/.식/g);
     meal.date = `${year}${numberPad(monthAndDay[0], 2)}${numberPad(monthAndDay[1], 2)}`;
     meal.time = time[0];
-    console.log(meal);
-    // meal crawling data를 받아와 처리한다
-  });
+    await MealRepository.getQueryRepository().setCrawlingData(meal);
+  } 
 }
 
 async function getImageSrc(boardSeq: string, pageNumber: number): Promise<string> {
