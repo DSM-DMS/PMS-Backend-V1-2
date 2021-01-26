@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from "@nestjs/common";
-import { MealRepository } from "./entity/meal.repository";
+import { MealRepository } from "./meal/entity/meal.repository";
 
 @Controller("event")
 export class EventController {

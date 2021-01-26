@@ -1,6 +1,6 @@
 import { BadRequestException } from "@nestjs/common";
 import { EntityRepository, getCustomRepository, QueryRunner, Repository } from "typeorm";
-import { MealCrawlDto, MealResponseData } from "../event.meal.dto";
+import { MealCrawlDto, MealResponseData } from "../../event.meal.dto";
 import { Meal } from "./meal.entity";
 
 @EntityRepository(Meal)

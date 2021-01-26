@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as cheerie from "cheerio";
 import { MealRepository } from "./entity/meal.repository";
-import { MealCrawlDto } from "./event.meal.dto";
+import { MealCrawlDto } from "../event.meal.dto";
 
 const DSMHS_URL: string = `https://dsmhs.djsch.kr`;
 
