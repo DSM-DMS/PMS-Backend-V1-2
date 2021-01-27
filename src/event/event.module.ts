@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { MealRepository } from "./entity/meal.repository";
+import { MealRepository } from "./meal/entity/meal.repository";
 import { EventController } from "./event.controller";
 import { EventService } from "./event.service";
 
