@@ -28,7 +28,7 @@ export class MealRepository extends Repository<Meal> {
     .where("meal.datetime = :datetime", { datetime })
     .getRawOne();
     if(!meal) {
-      throw new BadRequestException("Not found meal pictures");
+      return null;
     } else {
       return meal;
     }

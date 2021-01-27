@@ -1,12 +1,12 @@
 import { Controller, Get, Param } from "@nestjs/common";
-import { MealRepository } from "./meal/entity/meal.repository";
+import { EventService } from './event.service';
 
 @Controller("event")
 export class EventController {
-  constructor(private mealRepository: MealRepository) {}
+  constructor(private eventService: EventService) {}
 
   @Get("/meal/picture/:datetime")
   showMealPictures(@Param("datetime") datetime: string) {
-    return this.mealRepository.getOneByDatetimeWithPicture(datetime);
+    return this.eventService.getPicturesOnTheDay(datetime);
   }
 }
