@@ -50,6 +50,6 @@ export class MealRepository extends Repository<Meal> {
 
   public async getOrMakeOne(datetime: string): Promise<Meal> {
     const meal: Meal = await this.findOne({ where: { datetime } });
-    return meal ? meal : this.create({ datetime });
+    return meal ? meal : this.manager.save(this.create({ datetime }));
   }
 }
