@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { Auth } from "src/shared/authentication/auth.decorator";
+import { Auth } from "../shared/authentication/auth.decorator";
 import { AuthGuard } from "../shared/authentication/auth.guard";
 import { EventService } from './event.service';
 import { multerUploadOption } from "./event.type";

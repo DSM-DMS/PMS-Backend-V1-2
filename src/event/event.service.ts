@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable } from "@nestjs/common";
-import { ParentRepository } from "src/shared/parent/parent.repository";
+import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
 import { MealResponseData, UploadPictureDto, UploadPictureResponseData } from "./meal/meal.dto";
