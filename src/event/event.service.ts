@@ -33,4 +33,13 @@ export class EventService {
     await this.mealRepository.manager.save(meal);
     return { location: `/file/meal/${file.filename}` }
   }
+
+  public async setOneByDatetime(datetime: string): Promise<Meal> {
+    const meal :Meal = this.mealRepository.create({ datetime });
+    return await this.mealRepository.manager.save(meal);
+  }
+
+  public async deleteOneByDatetime(datetime: string) {
+    return await this.mealRepository.delete({ datetime });
+  }
 }
