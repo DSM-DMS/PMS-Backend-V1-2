@@ -9,3 +9,12 @@ export class MealResponseData {
   lunch: string;
   dinner: string;
 }
+
+export class UploadPictureDto {
+  datetime: string;
+  mealcode: number;
+}
+
+export class UploadPictureResponseData {
+  location: string;
+}
