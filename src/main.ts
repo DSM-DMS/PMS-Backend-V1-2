@@ -3,6 +3,7 @@ import "dotenv/config";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { Logger, ValidationPipe } from "@nestjs/common";
+import { setShedule } from "./event/meal/meal.scheduler";
 
 const port: string = process.env.PORT || "3000";
 
@@ -15,6 +16,12 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  if(process.env.NODE_ENV === "production") {
+    app.enableCors({ origin: process.env.ALLOW_ORIGIN, credentials: true });
+  } else {
+    app.enableCors();
+  }
+  setShedule();
   await app.listen(port);
   Logger.log(`server on ${port}`, "Bootstrap");
 }
