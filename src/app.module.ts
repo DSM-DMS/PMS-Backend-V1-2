@@ -5,11 +5,13 @@ import { connectionOptions } from "../ormconfig";
 import { HttpErrorFilter } from "./shared/http-error.filter";
 import { EventModule } from "./event/event.module";
 import { MealStaticFileMiddleware } from "./middleware/static.middleware";
+import { CalendarModule } from './calendar/calendar.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(connectionOptions[process.env.NODE_ENV]),
     EventModule,
+    CalendarModule,
   ],
   providers: [
     {
