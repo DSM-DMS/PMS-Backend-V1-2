@@ -1,3 +1,5 @@
+import { IsString } from "class-validator";
+
 export class MealResponseData {
   breakfast: string | string[];
   lunch: string | string[];
@@ -5,8 +7,11 @@ export class MealResponseData {
 }
 
 export class UploadPictureDto {
-  datetime: string;
-  mealcode: number;
+  @IsString()
+  public readonly datetime: string;
+
+  @IsString()
+  public readonly mealcode: string;
 }
 
 export class UploadPictureResponseData {

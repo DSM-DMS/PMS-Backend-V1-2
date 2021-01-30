@@ -31,11 +31,12 @@ export class EventService {
       throw new ForbiddenException("Fobidden user");
     }
     const meal: Meal = await this.mealRepository.getOrMakeOne(body.datetime);
-    if(body.mealcode === 1) {
+    const mealcode: number = +body.mealcode;
+    if(mealcode === 1) {
       meal.breakfast_img = `/file/meal/${file.filename}`;
-    } else if(body.mealcode === 2) {
+    } else if(mealcode === 2) {
       meal.lunch_img = `/file/meal/${file.filename}`;
-    } else if(body.mealcode === 3) {
+    } else if(mealcode === 3) {
       meal.dinner_img = `/file/meal/${file.filename}`;
     } else {
       throw new BadRequestException("Bad request");
