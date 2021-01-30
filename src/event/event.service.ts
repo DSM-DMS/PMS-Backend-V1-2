@@ -3,10 +3,20 @@ import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
 import { MealResponseData, UploadPictureDto, UploadPictureResponseData } from "./meal/meal.dto";
+import { BreakfastMealListDataFactory, DinnerMealListDataFactory, LunchMealListDataFactory } from "./meal/meal.list";
+import { MealListDataFactory } from "./meal/meal.type";
 
 @Injectable()
 export class EventService {
-  constructor(private mealRepository: MealRepository, private parentRepository: ParentRepository) {}
+  private breakfast: MealListDataFactory; 
+  private lunch: MealListDataFactory;
+  private dinner: MealListDataFactory;
+  
+  constructor(private mealRepository: MealRepository, private parentRepository: ParentRepository) {
+    this.breakfast = new BreakfastMealListDataFactory();
+    this.lunch = new LunchMealListDataFactory();
+    this.dinner = new DinnerMealListDataFactory();
+  }
 
   public async getPicturesOnTheDay(datetime: string): Promise<MealResponseData> {
     const response: MealResponseData = await this.mealRepository.getOneByDatetimeWithPicture(datetime);
