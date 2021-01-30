@@ -44,6 +44,17 @@ export class EventService {
     return { location: `/file/meal/${file.filename}` }
   }
 
+  public async getMealListsOnTheDay(datetime: string): Promise<MealResponseData> {
+    await this.breakfast.setMealList();
+    await this.lunch.setMealList();
+    await this.dinner.setMealList();
+    return {
+      breakfast: await this.breakfast.getMeallist(datetime),
+      lunch: await this.lunch.getMeallist(datetime),
+      dinner: await this.dinner.getMeallist(datetime),
+    }
+  }
+
   public async setOneByDatetime(datetime: string): Promise<Meal> {
     const meal :Meal = this.mealRepository.create({ datetime });
     return await this.mealRepository.manager.save(meal);

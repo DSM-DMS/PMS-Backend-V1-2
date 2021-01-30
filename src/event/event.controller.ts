@@ -23,6 +23,12 @@ export class EventController {
     @UploadedFile() file: Express.Multer.File, 
     @Auth("email") email: string, 
     @Body() body: UploadPictureDto) {
-    return this.uploadMealPicture(file, email, body);
+    return this.eventService.setPictureOnTheDay(file, email, body);
+  }
+
+  @Get("/meal/:datetime")
+  @UseGuards(new AuthGuard())
+  async showMealLists(@Param("datetime") datetime: string) {
+    return this.eventService.getMealListsOnTheDay(datetime);
   }
 }
