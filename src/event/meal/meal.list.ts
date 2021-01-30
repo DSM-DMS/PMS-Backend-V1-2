@@ -1,3 +1,4 @@
+import { BadRequestException } from "@nestjs/common";
 import { Meal } from "./entity/meal.entity";
 import { MealRepository } from "./entity/meal.repository";
 import { MealApiIndexRepository } from "./entity/mealApiIndex.repository";
@@ -25,7 +26,10 @@ export class BreakfastMealListDataFactory extends MealListDataFactory {
     await MealApiIndexRepository.getQueryRepository().setApiIndex("breakfast_api_index", this.index);
   }
   public async getMeallist(datetime: string): Promise<string[]> {
-    const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);
+    const meal: Meal = await MealRepository.getQueryRepository().findOne({ where: { datetime } });
+    if(!meal) {
+      throw new BadRequestException("unknown parameter")
+    }
     return meal.breakfast_list.replace(/([0-9]+\.)+/g, "").split("<br/>");
   }
 }
@@ -52,7 +56,10 @@ export class LunchMealListDataFactory extends MealListDataFactory {
     await MealApiIndexRepository.getQueryRepository().setApiIndex("lunch_api_index", this.index);
   }
   public async getMeallist(datetime: string): Promise<string[]> {
-    const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);
+    const meal: Meal = await MealRepository.getQueryRepository().findOne({ where: { datetime } });
+    if(!meal) {
+      throw new BadRequestException("unknown parameter")
+    }
     return meal.lunch_list.replace(/([0-9]+\.)+/g, "").split("<br/>");
   }
 }
@@ -79,7 +86,10 @@ export class DinnerMealListDataFactory extends MealListDataFactory {
     await MealApiIndexRepository.getQueryRepository().setApiIndex("dinner_api_index", this.index);
   }
   public async getMeallist(datetime: string): Promise<string[]> {
-    const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);
+    const meal: Meal = await MealRepository.getQueryRepository().findOne({ where: { datetime } });
+    if(!meal) {
+      throw new BadRequestException("unknown parameter")
+    }
     return meal.dinner_list.replace(/([0-9]+\.)+/g, "").split("<br/>");
   }
 }
