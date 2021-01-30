@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Meal } from "./entity/meal.entity";
-import { MealResponseData } from './meal.dto';
 
 export class MealCrawlData {
   date: string;
