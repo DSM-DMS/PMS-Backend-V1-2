@@ -1,16 +1,18 @@
 import { Meal } from "./entity/meal.entity";
 import { MealRepository } from "./entity/meal.repository";
+import { MealApiIndexRepository } from "./entity/mealApiIndex.repository";
 import { MealListDataFactory } from "./meal.type";
 
 export class BreakfastMealListDataFactory extends MealListDataFactory {
   constructor() {
     super();
     this.apiKey = process.env.NEIS_API_KEY;
-    this.index = 510;
     this.sc_code = 1;
     this.setMealList();
   }
   public async setMealList(): Promise<void> {
+    const index: number = await MealApiIndexRepository.getQueryRepository().getApiIndex("breakfast_api_index");
+    this.index = index ? index : 510;
     while(await this.guestOneThing()) {
       this.index++;
       await MealRepository.getQueryRepository()
@@ -20,6 +22,7 @@ export class BreakfastMealListDataFactory extends MealListDataFactory {
         time: "breakfast_list" 
       });
     }
+    await MealApiIndexRepository.getQueryRepository().setApiIndex("breakfast_api_index", this.index);
   }
   public async getMeallist(datetime: string): Promise<string[]> {
     const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);
@@ -31,11 +34,12 @@ export class LunchMealListDataFactory extends MealListDataFactory {
   constructor() {
     super();
     this.apiKey = process.env.NEIS_API_KEY;
-    this.index = 501;
     this.sc_code = 2;
     this.setMealList();
   }
   public async setMealList(): Promise<void> {
+    const index: number = await MealApiIndexRepository.getQueryRepository().getApiIndex("lunch_api_index");
+    this.index = index ? index : 501;
     while(await this.guestOneThing()) {
       this.index++;
       MealRepository.getQueryRepository()
@@ -45,6 +49,7 @@ export class LunchMealListDataFactory extends MealListDataFactory {
         time: "lunch_list" 
       });
     }
+    await MealApiIndexRepository.getQueryRepository().setApiIndex("lunch_api_index", this.index);
   }
   public async getMeallist(datetime: string): Promise<string[]> {
     const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);
@@ -56,11 +61,12 @@ export class DinnerMealListDataFactory extends MealListDataFactory {
   constructor() {
     super();
     this.apiKey = process.env.NEIS_API_KEY;
-    this.index = 436;
     this.sc_code = 3;
     this.setMealList();
   }
   public async setMealList(): Promise<void> {
+    const index: number = await MealApiIndexRepository.getQueryRepository().getApiIndex("dinner_api_index");
+    this.index = index ? index : 436;
     while(await this.guestOneThing()) {
       this.index++;
       MealRepository.getQueryRepository()
@@ -70,6 +76,7 @@ export class DinnerMealListDataFactory extends MealListDataFactory {
         time: "dinner_list" 
       });
     }
+    await MealApiIndexRepository.getQueryRepository().setApiIndex("dinner_api_index", this.index);
   }
   public async getMeallist(datetime: string): Promise<string[]> {
     const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);

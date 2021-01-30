@@ -8,7 +8,7 @@ export class MealApiIndexRepository extends Repository<MealApiIndex> {
   }
 
   public async getOrMake(): Promise<MealApiIndex> {
-    const indexes: MealApiIndex = await this.findOne({ where: { id: 1 } });
+    const indexes: MealApiIndex = await this.findOne();
     return indexes ? indexes : await this.manager.save(this.create({ id: 1 }));
   }
 
