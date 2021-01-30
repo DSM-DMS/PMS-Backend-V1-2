@@ -1,5 +1,5 @@
 import { EntityRepository, getCustomRepository, QueryRunner, Repository } from "typeorm";
-import { MealCrawlDto, MealResponseData } from "../meal.dto";
+import { MealCrawlDto, MealListDto, MealResponseData } from "../meal.dto";
 import { Meal } from "./meal.entity";
 
 @EntityRepository(Meal)
@@ -46,6 +46,12 @@ export class MealRepository extends Repository<Meal> {
       await this.setCorrectColumn(mealDto);
       return await this.manager.save(this.newMeal);
     }
+  }
+
+  public async setListData(mealDto: MealListDto): Promise<void> {
+    const meal: Meal = await this.getOrMakeOne(mealDto.date);
+    meal[mealDto.time as string] = mealDto.list;
+    await this.manager.save(meal);
   }
 
   public async getOrMakeOne(datetime: string): Promise<Meal> {
