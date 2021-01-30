@@ -1,7 +1,7 @@
 export class MealResponseData {
-  breakfast: string;
-  lunch: string;
-  dinner: string;
+  breakfast: string | string[];
+  lunch: string | string[];
+  dinner: string | string[];
 }
 
 export class UploadPictureDto {
