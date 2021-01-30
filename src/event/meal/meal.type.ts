@@ -1,10 +1,22 @@
 import axios from "axios";
-import { MealCrawlDto } from "./meal.dto";
+import { Meal } from "./entity/meal.entity";
+
+export class MealCrawlData {
+  date: string;
+  url: string;
+  time?: string;
+}
+
+export class MealListData {
+  date: string;
+  list: string;
+  time: keyof Meal;
+}
 
 export abstract class AbstractGetMealDateFactory {
-  public abstract getLatestMeal(): Promise<MealCrawlDto>;
-  public abstract getMealOnOnePage(pageNumber: number): Promise<MealCrawlDto[]>;
-  public abstract setLetestMeal(meal: MealCrawlDto): Promise<boolean>;
+  public abstract getLatestMeal(): Promise<MealCrawlData>;
+  public abstract getMealOnOnePage(pageNumber: number): Promise<MealCrawlData[]>;
+  public abstract setLetestMeal(meal: MealCrawlData): Promise<boolean>;
 }
 
 export abstract class MealListDataFactory {

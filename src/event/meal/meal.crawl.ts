@@ -2,8 +2,7 @@ import { Logger } from "@nestjs/common";
 import axios from "axios";
 import * as cheerie from "cheerio";
 import { MealRepository } from "./entity/meal.repository";
-import { MealCrawlDto } from "./meal.dto";
-import { AbstractGetMealDateFactory } from "./meal.type";
+import { AbstractGetMealDateFactory, MealCrawlData } from "./meal.type";
 
 export class CrwalingMealDataFactory extends AbstractGetMealDateFactory {
   private DSMHS_URL: string = `https://dsmhs.djsch.kr`;
@@ -19,7 +18,7 @@ export class CrwalingMealDataFactory extends AbstractGetMealDateFactory {
     return $("img")[5].attribs.src;
   }
 
-  private async deserializeAndSaveMealData(meals: MealCrawlDto[]): Promise<MealCrawlDto[]> {
+  private async deserializeAndSaveMealData(meals: MealCrawlData[]): Promise<MealCrawlData[]> {
     const year: number = (new Date()).getFullYear();
     meals.forEach(meal => {
       const monthAndDay: string[] = meal.date.match(/[0-9]+/g);
@@ -31,7 +30,7 @@ export class CrwalingMealDataFactory extends AbstractGetMealDateFactory {
   }
 
   public async getMealOnOnePage(pageNumber: number) {
-    const result: MealCrawlDto[] = [];
+    const result: MealCrawlData[] = [];
     const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=${pageNumber}&m=020504&s=dsmhs&boardID=54798`);
     const $: any = cheerie.load(data);
     const mealTitles: string[] = $(".link").text().split("\n");
@@ -46,7 +45,7 @@ export class CrwalingMealDataFactory extends AbstractGetMealDateFactory {
     return await this.deserializeAndSaveMealData(result);
   }
 
-  public async getLatestMeal() :Promise<MealCrawlDto> {
+  public async getLatestMeal() :Promise<MealCrawlData> {
     const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=1&m=020504&s=dsmhs&boardID=54798`);
     const $: any = cheerie.load(data);
     const mealTitles: string[] = $(".link").text().split("\n");
@@ -59,7 +58,7 @@ export class CrwalingMealDataFactory extends AbstractGetMealDateFactory {
     }
   }
 
-  public async setLetestMeal(meal: MealCrawlDto): Promise<boolean> {
+  public async setLetestMeal(meal: MealCrawlData): Promise<boolean> {
     try {
       await MealRepository.getQueryRepository().setCrawlingData(meal);
       return true;
