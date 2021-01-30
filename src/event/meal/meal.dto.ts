@@ -1,5 +1,3 @@
-import { Meal } from "./entity/meal.entity";
-
 export class MealResponseData {
   breakfast: string;
   lunch: string;
