@@ -1,3 +1,4 @@
+import { Meal } from "./entity/meal.entity";
 import { MealRepository } from "./entity/meal.repository";
 import { MealListDataFactory } from "./meal.type";
 
@@ -20,6 +21,10 @@ export class BreakfastMealListDataFactory extends MealListDataFactory {
       });
     }
   }
+  public async getMeallist(datetime: string): Promise<string[]> {
+    const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);
+    return meal.breakfast_list.replace(/([0-9]+\.)+/g, "").split("<br/>");
+  }
 }
 
 export class LunchMealListDataFactory extends MealListDataFactory {
@@ -41,6 +46,10 @@ export class LunchMealListDataFactory extends MealListDataFactory {
       });
     }
   }
+  public async getMeallist(datetime: string): Promise<string[]> {
+    const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);
+    return meal.lunch_list.replace(/([0-9]+\.)+/g, "").split("<br/>");
+  }
 }
 
 export class DinnerMealListDataFactory extends MealListDataFactory {
@@ -61,5 +70,9 @@ export class DinnerMealListDataFactory extends MealListDataFactory {
         time: "dinner_list" 
       });
     }
+  }
+  public async getMeallist(datetime: string): Promise<string[]> {
+    const meal: Meal = await MealRepository.getQueryRepository().getOrMakeOne(datetime);
+    return meal.dinner_list.replace(/([0-9]+\.)+/g, "").split("<br/>");
   }
 }

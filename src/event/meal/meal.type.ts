@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Meal } from "./entity/meal.entity";
+import { MealResponseData } from './meal.dto';
 
 export class MealCrawlData {
   date: string;
@@ -40,4 +41,5 @@ export abstract class MealListDataFactory {
   }
 
   public abstract setMealList(): Promise<void>;
+  public abstract getMeallist(datetime: string): Promise<string[]>;
 }
