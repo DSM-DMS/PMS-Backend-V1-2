@@ -16,6 +16,11 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  if(process.env.NODE_ENV === "production") {
+    app.enableCors({ origin: process.env.ALLOW_ORIGIN, credentials: true });
+  } else {
+    app.enableCors();
+  }
   setShedule();
   await app.listen(port);
   Logger.log(`server on ${port}`, "Bootstrap");
