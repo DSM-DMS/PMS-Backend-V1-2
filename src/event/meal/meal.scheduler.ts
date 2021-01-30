@@ -1,17 +1,16 @@
 import * as schedule from "node-schedule";
 
-import { AbstractGetMealDateFactory } from "./meal.type";
-import { MealCrawlDto } from "./meal.dto";
+import { AbstractGetMealDateFactory, MealCrawlData } from "./meal.type";
 import { CrwalingMealDataFactory } from "./meal.crawl";
 
 const crwalingMealData: AbstractGetMealDateFactory = new CrwalingMealDataFactory();
 
 async function setNewMeal() {
-  const newBreakfast: MealCrawlDto = await crwalingMealData.getLatestMeal(); 
+  const newBreakfast: MealCrawlData = await crwalingMealData.getLatestMeal(); 
   const isSaved = await crwalingMealData.setLetestMeal(newBreakfast);
   if(!isSaved) {
     setTimeout(async () => {
-      const newBreakfast: MealCrawlDto = await crwalingMealData.getLatestMeal(); 
+      const newBreakfast: MealCrawlData = await crwalingMealData.getLatestMeal(); 
       await crwalingMealData.setLetestMeal(newBreakfast);
     }, 60000*30);
   }

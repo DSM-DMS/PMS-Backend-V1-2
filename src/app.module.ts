@@ -1,9 +1,10 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { connectionOptions } from "../ormconfig";
 import { HttpErrorFilter } from "./shared/http-error.filter";
 import { EventModule } from "./event/event.module";
+import { MealStaticFileMiddleware } from "./middleware/static.middleware";
 
 @Module({
   imports: [
@@ -17,4 +18,8 @@ import { EventModule } from "./event/event.module";
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(MealStaticFileMiddleware).forRoutes("file/meal");
+  }
+}

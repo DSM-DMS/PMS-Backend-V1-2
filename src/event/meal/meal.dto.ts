@@ -1,11 +1,19 @@
-export class MealCrawlDto {
-  date: string;
-  url: string;
-  time?: string;
-}
+import { IsString } from "class-validator";
 
 export class MealResponseData {
-  breakfast: string;
-  lunch: string;
-  dinner: string;
+  breakfast: string | string[];
+  lunch: string | string[];
+  dinner: string | string[];
+}
+
+export class UploadPictureDto {
+  @IsString()
+  public readonly datetime: string;
+
+  @IsString()
+  public readonly mealcode: string;
+}
+
+export class UploadPictureResponseData {
+  location: string;
 }
