@@ -1,12 +1,10 @@
 import { AbstractCalendarDataFactory, Calendar } from "./calendar.type";
 import axios from "axios";
-import * as schedule from "node-schedule";
 
 export class CalendarDataFactory extends AbstractCalendarDataFactory {
   constructor() {
     super();
     this.setCalendar();
-    schedule.scheduleJob("0 0 0 1 * *", this.setCalendar);
   }
 
   private subString(str: string): string {
