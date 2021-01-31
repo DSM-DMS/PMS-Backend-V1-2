@@ -17,7 +17,6 @@ export class CalendarDataFactory extends AbstractCalendarDataFactory {
   }
 
   public async setCalendar(): Promise<void> {
-    console.log(this.fromYMD);
     const { data } = await axios.get(this.getUrl());
     if(!data.SchoolSchedule) {
       return;
