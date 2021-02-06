@@ -4,7 +4,7 @@ import * as cheerie from "cheerio";
 import { MealRepository } from "./entity/meal.repository";
 import { AbstractGetMealDateFactory, MealCrawlData } from "./meal.type";
 
-export class CrwalingMealDataFactory extends AbstractGetMealDateFactory {
+export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
   private DSMHS_URL: string = `https://dsmhs.djsch.kr`;
   
   private numberPad(n: string, width: number): string {
@@ -61,6 +61,18 @@ export class CrwalingMealDataFactory extends AbstractGetMealDateFactory {
   public async setLetestMeal(meal: MealCrawlData): Promise<boolean> {
     try {
       await MealRepository.getQueryRepository().setCrawlingData(meal);
+      return true;
+    } catch(err) {
+      Logger.error(err);
+      return false;
+    }
+  }
+
+  public async setMealOnOnePage(meals: MealCrawlData[]) {
+    try {
+      for(let meal of meals) {
+        await MealRepository.getQueryRepository().setCrawlingData(meal);
+      }
       return true;
     } catch(err) {
       Logger.error(err);
