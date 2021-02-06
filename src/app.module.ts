@@ -7,6 +7,7 @@ import { EventModule } from "./event/event.module";
 import { MealStaticFileMiddleware } from "./middleware/static.middleware";
 import { CalendarModule } from './calendar/calendar.module';
 import { NoticeModule } from './notice/notice.module';
+import { IntroduceModule } from './introduce/introduce.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { NoticeModule } from './notice/notice.module';
     EventModule,
     CalendarModule,
     NoticeModule,
+    IntroduceModule,
   ],
   providers: [
     {
