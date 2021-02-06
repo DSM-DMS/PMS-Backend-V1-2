@@ -3,19 +3,17 @@ import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
 import { MealResponseData, UploadPictureDto, UploadPictureResponseData } from "./meal/meal.dto";
-import { BreakfastMealListDataFactory, DinnerMealListDataFactory, LunchMealListDataFactory } from "./meal/meal.list";
-import { MealListDataFactory } from "./meal/meal.type";
+import axios from "axios";
 
 @Injectable()
 export class EventService {
-  private breakfast: MealListDataFactory; 
-  private lunch: MealListDataFactory;
-  private dinner: MealListDataFactory;
-  
-  constructor(private mealRepository: MealRepository, private parentRepository: ParentRepository) {
-    this.breakfast = new BreakfastMealListDataFactory();
-    this.lunch = new LunchMealListDataFactory();
-    this.dinner = new DinnerMealListDataFactory();
+  constructor(private mealRepository: MealRepository, private parentRepository: ParentRepository) {}
+
+  private subString(str: string): string {
+    const year: string = str.substr(0, 4);
+    const month: string = str.substr(4, 2);
+    const day: string = str.substr(6, 2);
+    return `${year}-${month}-${day}`;
   }
 
   public async getPicturesOnTheDay(datetime: string): Promise<MealResponseData> {
@@ -46,14 +44,10 @@ export class EventService {
   }
 
   public async getMealListsOnTheDay(datetime: string): Promise<MealResponseData> {
-    await this.breakfast.setMealList();
-    await this.lunch.setMealList();
-    await this.dinner.setMealList();
-    return {
-      breakfast: await this.breakfast.getMeallist(datetime),
-      lunch: await this.lunch.getMeallist(datetime),
-      dinner: await this.dinner.getMeallist(datetime),
-    }
+    const ymd: string = this.subString(datetime);
+    const { data } = await axios.get(`https://api.dsm-dms.com/meal/${ymd}`);
+    const responseData: MealResponseData = data[ymd];
+    return responseData;
   }
 
   public async setOneByDatetime(datetime: string): Promise<Meal> {

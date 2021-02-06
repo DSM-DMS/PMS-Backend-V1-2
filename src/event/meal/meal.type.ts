@@ -17,6 +17,7 @@ export abstract class AbstractGetMealDateFactory {
   public abstract getLatestMeal(): Promise<MealCrawlData>;
   public abstract getMealOnOnePage(pageNumber: number): Promise<MealCrawlData[]>;
   public abstract setLetestMeal(meal: MealCrawlData): Promise<boolean>;
+  public abstract setMealOnOnePage(meals: MealCrawlData[]): Promise<boolean>;
 }
 
 export abstract class MealListDataFactory {

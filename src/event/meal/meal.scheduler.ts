@@ -1,22 +1,26 @@
 import * as schedule from "node-schedule";
 
 import { AbstractGetMealDateFactory, MealCrawlData } from "./meal.type";
-import { CrwalingMealDataFactory } from "./meal.crawl";
+import { CrawlingMealDataFactory } from "./meal.crawl";
 
-const crwalingMealData: AbstractGetMealDateFactory = new CrwalingMealDataFactory();
+const crawlingMealData: AbstractGetMealDateFactory = new CrawlingMealDataFactory();
 
 async function setNewMeal() {
-  const newBreakfast: MealCrawlData = await crwalingMealData.getLatestMeal(); 
-  const isSaved = await crwalingMealData.setLetestMeal(newBreakfast);
+  const newBreakfast: MealCrawlData = await crawlingMealData.getLatestMeal(); 
+  const isSaved = await crawlingMealData.setLetestMeal(newBreakfast);
   if(!isSaved) {
     setTimeout(async () => {
-      const newBreakfast: MealCrawlData = await crwalingMealData.getLatestMeal(); 
-      await crwalingMealData.setLetestMeal(newBreakfast);
+      const newBreakfast: MealCrawlData = await crawlingMealData.getLatestMeal(); 
+      await crawlingMealData.setLetestMeal(newBreakfast);
     }, 60000*30);
   }
 }
 
-export function setShedule() {
+export async function setSchedule() {
+  for(let i=1; i<=3; i++) {
+    const mealDatas: MealCrawlData[] = await crawlingMealData.getMealOnOnePage(i);
+    await crawlingMealData.setMealOnOnePage(mealDatas);
+  }
   const scheduleBreakfast = schedule.scheduleJob("0 0 10 * * *", setNewMeal);
   const scheduleLunch = schedule.scheduleJob("0 0 14 * * *", setNewMeal);
   const sheduleDinner = schedule.scheduleJob("0 0 19 * * *", setNewMeal);
