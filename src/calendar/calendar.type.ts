@@ -13,7 +13,7 @@ export abstract class AbstractCalendarDataFactory {
   }
 
   constructor() {
-    this.apiKey = "1415344e6da54ac0b5a628508f289629";//process.env.NEIS_API_KEY;
+    this.apiKey = process.env.NEIS_API_KEY;
     this.fromYMD = "20210101";
     this.toYMD = "20211231";
     this.calendar = {};
