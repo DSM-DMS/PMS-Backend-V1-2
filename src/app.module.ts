@@ -6,6 +6,7 @@ import { HttpErrorFilter } from "./shared/http-error.filter";
 import { EventModule } from "./event/event.module";
 import { MealStaticFileMiddleware } from "./middleware/static.middleware";
 import { CalendarModule } from './calendar/calendar.module';
+import { NoticeModule } from './notice/notice.module';
 import { IntroduceModule } from './introduce/introduce.module';
 
 @Module({
@@ -13,6 +14,7 @@ import { IntroduceModule } from './introduce/introduce.module';
     TypeOrmModule.forRoot(connectionOptions[process.env.NODE_ENV]),
     EventModule,
     CalendarModule,
+    NoticeModule,
     IntroduceModule,
   ],
   providers: [
