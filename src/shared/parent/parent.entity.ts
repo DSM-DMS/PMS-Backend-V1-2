@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("parent")
+@Entity("users")
 export class Parent {
   @PrimaryGeneratedColumn()
   email: string;
