@@ -27,7 +27,8 @@ async function bootstrap() {
   .setTitle("PMS")
   .setDescription("PMS API V1")
   .setVersion("1.0")
-  .addTag("club")
+  .setContact("jeongjiwoo0522", "https://github.com/jeongjiwoo0522", "jiwoourty@gmail.com")
+  .setLicense("Licenses", "https://www.dsm-pms.com")
   .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
