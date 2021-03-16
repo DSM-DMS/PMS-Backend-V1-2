@@ -15,6 +15,9 @@ export class UploadPictureDto {
   @ApiProperty({ example: "1" })
   @IsString()
   public readonly mealcode: string;
+
+  @ApiProperty({ type: 'string', format: 'binary' })
+  file: any;
 }
 
 export class UploadPictureResponseData {
