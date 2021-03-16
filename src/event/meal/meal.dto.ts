@@ -1,4 +1,5 @@
-import { IsString } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString } from "class-validator"
 
 export class MealResponseData {
   breakfast: string | string[];
@@ -7,9 +8,11 @@ export class MealResponseData {
 }
 
 export class UploadPictureDto {
+  @ApiProperty({ example: "20210104" })
   @IsString()
   public readonly datetime: string;
 
+  @ApiProperty({ example: "1" })
   @IsString()
   public readonly mealcode: string;
 }
