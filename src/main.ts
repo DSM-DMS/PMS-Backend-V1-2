@@ -36,3 +36,7 @@ async function bootstrap() {
   Logger.log(`server on ${port}`, "Bootstrap");
 }
 bootstrap();
+
+process.on("uncaughtException", (err) => { 
+  console.error("uncaughtException (Node is alive)", err); 
+});
