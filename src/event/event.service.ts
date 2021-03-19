@@ -30,17 +30,18 @@ export class EventService {
     }
     const meal: Meal = await this.mealRepository.getOrMakeOne(body.datetime);
     const mealcode: number = +body.mealcode;
-    if(mealcode === 1) {
-      meal.breakfast_img = `/file/meal/${file.filename}`;
-    } else if(mealcode === 2) {
-      meal.lunch_img = `/file/meal/${file.filename}`;
-    } else if(mealcode === 3) {
-      meal.dinner_img = `/file/meal/${file.filename}`;
-    } else {
-      throw new BadRequestException("Bad request");
+    switch (mealcode) {
+      case 1:
+        meal.breakfast_img = `${process.env.SERVICE_URL}/file/meal/${file.filename}`; break;
+      case 2:
+        meal.lunch_img = `${process.env.SERVICE_URL}/file/meal/${file.filename}`; break;
+      case 3:
+        meal.dinner_img = `${process.env.SERVICE_URL}/file/meal/${file.filename}`; break;
+      default:
+        throw new BadRequestException("Bad request");
     }
     await this.mealRepository.manager.save(meal);
-    return { location: `/file/meal/${file.filename}` }
+    return { location: `${process.env.SERVICE_URL}/file/meal/${file.filename}` }
   }
 
   public async getMealListsOnTheDay(datetime: string): Promise<MealResponseData> {
