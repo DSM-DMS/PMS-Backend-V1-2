@@ -12,6 +12,7 @@ import { IntroduceModule } from './introduce/introduce.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(connectionOptions[process.env.NODE_ENV]),
+    TypeOrmModule.forRoot(connectionOptions["dms"]),
     EventModule,
     CalendarModule,
     NoticeModule,
