@@ -1,22 +1,13 @@
 import "dotenv/config";
 import { ConnectionOptions } from "typeorm";
+import { Meal } from "./event/meal/entity/meal.entity";
+import { Parent } from "./shared/parent/parent.entity";
 
 interface DBConnectionOptions {
   [env: string]: ConnectionOptions;
 }
 
 const connectionOptions: DBConnectionOptions = {
-  test: {
-    type: "mysql",
-    host: process.env.TEST_DATABASE_HOST,
-    port: +process.env.TEST_DATABASE_PORT,
-    username: process.env.TEST_DATABASE_USER,
-    password: process.env.TEST_DATABASE_PASSWORD,
-    database: process.env.TEST_DATABASE_NAME,
-    synchronize: true,
-    logging: false,
-    entities: ["./dist/**/*.entity.js", "./src/**/*.entity.ts"],
-  },
   development: {
     type: "mysql",
     host: process.env.DEVELOPMENT_DATABASE_HOST,
@@ -26,7 +17,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.DEVELOPMENT_DATABASE_NAME,
     synchronize: true,
     logging: true,
-    entities: ["./dist/**/*.entity.js"],
+    entities: [Meal, Parent],
   },
   production: {
     type: "postgres",
@@ -37,7 +28,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.PRODUCTION_DATABASE_NAME,
     synchronize: false,
     logging: true,
-    entities: ["./dist/**/*.entity.js"],
+    entities: [Meal, Parent],
   }
 }
 
