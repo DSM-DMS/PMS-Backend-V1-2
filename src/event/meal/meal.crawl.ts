@@ -13,9 +13,13 @@ export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
   }
 
   private async getImageSrc(boardSeq: string, pageNumber: number): Promise<string> {
-    const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/view.do?boardID=54798&boardSeq=${boardSeq}&lev=0&searchType=null&statusYN=W&page=${pageNumber}&pSize=10&s=dsmhs&m=020504&opType=N`);
-    const $: any = cheerie.load(data);
-    return $("img")[5].attribs.src;
+    try {
+      const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/view.do?boardID=54798&boardSeq=${boardSeq}&lev=0&searchType=null&statusYN=W&page=${pageNumber}&pSize=10&s=dsmhs&m=020504&opType=N`);
+      const $: any = cheerie.load(data);
+      return $("img")[5].attribs.src;
+    } catch(err) {
+      Logger.error(err);
+    }
   }
 
   private async deserializeAndSaveMealData(meals: MealCrawlData[]): Promise<MealCrawlData[]> {
@@ -30,31 +34,39 @@ export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
   }
 
   public async getMealOnOnePage(pageNumber: number) {
-    const result: MealCrawlData[] = [];
-    const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=${pageNumber}&m=020504&s=dsmhs&boardID=54798`);
-    const $: any = cheerie.load(data);
-    const mealTitles: string[] = $(".link").text().split("\n");
-    const startIndex: number = mealTitles.length - 10;
-    for(let i=0; i<10; i++) {
-      const boardSeq: string = $(".link")[i].childNodes[1].attribs.onclick.toString().match(/[0-9]+/g)[1];
-      result.push({ 
-        date: mealTitles[startIndex + i], 
-        url: `${this.DSMHS_URL}${await this.getImageSrc(boardSeq, pageNumber)}` 
-      });
+    try {
+      const result: MealCrawlData[] = [];
+      const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=${pageNumber}&m=020504&s=dsmhs&boardID=54798`);
+      const $: any = cheerie.load(data);
+      const mealTitles: string[] = $(".link").text().split("\n");
+      const startIndex: number = mealTitles.length - 10;
+      for(let i=0; i<10; i++) {
+        const boardSeq: string = $(".link")[i].childNodes[1].attribs.onclick.toString().match(/[0-9]+/g)[1];
+        result.push({ 
+          date: mealTitles[startIndex + i], 
+          url: `${this.DSMHS_URL}${await this.getImageSrc(boardSeq, pageNumber)}` 
+        });
+      }
+      return await this.deserializeAndSaveMealData(result);
+    } catch(err) {
+      Logger.error(err);
     }
-    return await this.deserializeAndSaveMealData(result);
   }
 
   public async getLatestMeal() :Promise<MealCrawlData> {
-    const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=1&m=020504&s=dsmhs&boardID=54798`);
-    const $: any = cheerie.load(data);
-    const mealTitles: string[] = $(".link").text().split("\n");
-    const startIndex: number = mealTitles.length - 10;
-    const boardSeq: string = $(".link")[0].childNodes[1].attribs.onclick.toString().match(/[0-9]+/g)[1];
-    return { 
-      date: mealTitles[startIndex], 
-      url: `${this.DSMHS_URL}${await this.getImageSrc(boardSeq, 1)}`,
-      time: mealTitles[startIndex].match(/.식/g)[0],
+    try {
+      const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=1&m=020504&s=dsmhs&boardID=54798`);
+      const $: any = cheerie.load(data);
+      const mealTitles: string[] = $(".link").text().split("\n");
+      const startIndex: number = mealTitles.length - 10;
+      const boardSeq: string = $(".link")[0].childNodes[1].attribs.onclick.toString().match(/[0-9]+/g)[1];
+      return { 
+        date: mealTitles[startIndex], 
+        url: `${this.DSMHS_URL}${await this.getImageSrc(boardSeq, 1)}`,
+        time: mealTitles[startIndex].match(/.식/g)[0],
+      }
+    } catch(err) {
+      Logger.error(err);
     }
   }
 
