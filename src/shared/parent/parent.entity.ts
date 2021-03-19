@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity("parent")
+@Entity("users")
 export class Parent {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   email: string;
 
   @Column()
@@ -13,4 +13,7 @@ export class Parent {
 
   @Column({ nullable: true })
   user_role: string;
+
+  @Column({ nullable: true })
+  provider: string; 
 }

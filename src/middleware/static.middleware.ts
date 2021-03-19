@@ -6,6 +6,6 @@ import { join } from "path";
 @Injectable()
 export class MealStaticFileMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    ExpressStatic(join(__dirname, "../../../upload/meal"))(req, res, next);
+    ExpressStatic(join(__dirname, "../../upload/meal"))(req, res, next);
   }
 }
