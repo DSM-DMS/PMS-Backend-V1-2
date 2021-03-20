@@ -2,12 +2,14 @@ import * as schedule from "node-schedule";
 
 import { AbstractGetMealDateFactory, MealCrawlData } from "./meal.type";
 import { CrawlingMealDataFactory } from "./meal.crawl";
+import { Logger } from "@nestjs/common";
 
 const crawlingMealData: AbstractGetMealDateFactory = new CrawlingMealDataFactory();
 
 async function setNewMeal() {
   const newBreakfast: MealCrawlData = await crawlingMealData.getLatestMeal(); 
   const isSaved = await crawlingMealData.setLetestMeal(newBreakfast);
+  Logger.log(`set schedule ${isSaved}`);
   if(!isSaved) {
     setTimeout(async () => {
       const newBreakfast: MealCrawlData = await crawlingMealData.getLatestMeal(); 
@@ -17,11 +19,10 @@ async function setNewMeal() {
 }
 
 export async function setSchedule() {
-  for(let i=1; i<=3; i++) {
-    const mealDatas: MealCrawlData[] = await crawlingMealData.getMealOnOnePage(i);
-    await crawlingMealData.setMealOnOnePage(mealDatas);
-  }
   const scheduleBreakfast = schedule.scheduleJob("0 0 10 * * *", setNewMeal);
   const scheduleLunch = schedule.scheduleJob("0 0 14 * * *", setNewMeal);
   const sheduleDinner = schedule.scheduleJob("0 0 19 * * *", setNewMeal);
+  schedule.scheduleJob("* 44 * * * *", () => {
+    console.log("hello 0 0 19 * * *0 0 19 * * *");
+  });
 }
