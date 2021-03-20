@@ -8,10 +8,8 @@ export class CalendarDataFactory extends AbstractCalendarDataFactory {
   }
 
   private subString(str: string): string {
-    const year: string = str.substr(0, 4);
-    const month: string = str.substr(4, 2);
-    const day: string = str.substr(6, 2);
-    return `${year}-${month}-${day}`;
+    // yyymmdd to yyyy-mm-dd
+    return `${str.substr(0, 4)}-${str.substr(4, 2)}-${str.substr(6, 2)}`;
   }
 
   public async setCalendar(): Promise<void> {
