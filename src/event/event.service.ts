@@ -3,9 +3,9 @@ import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
 import { MealResponseData, UploadPictureDto, UploadPictureResponseData } from "./meal/meal.dto";
-import { MealListRepository } from "src/shared/dms/dms.meal.repository";
+import { MealListRepository } from "../shared/dms/dms.meal.repository";
 import { InjectRepository } from "@nestjs/typeorm";
-import { MealList } from "src/shared/dms/dms.meal.entity";
+import { MealList } from "../shared/dms/dms.meal.entity";
 
 const typeList: string[] = ['breakfast', 'lunch', 'dinner'];
 
