@@ -5,7 +5,7 @@ export class MealList {
   @PrimaryColumn("date")
   date: Date;
 
-  @Column("int")
+  @PrimaryColumn("int")
   type: number;
 
   @Column({ type: "varchar", length: 300 })
