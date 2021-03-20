@@ -22,7 +22,7 @@ export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
     }
   }
 
-  private async deserializeAndSaveMealData(meals: MealCrawlData[]): Promise<MealCrawlData[]> {
+  private async deserializeOnePageData(meals: MealCrawlData[]): Promise<MealCrawlData[]> {
     const year: number = (new Date()).getFullYear();
     meals.forEach(meal => {
       const monthAndDay: string[] = meal.date.match(/[0-9]+/g);
@@ -33,7 +33,24 @@ export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
     return meals;
   }
 
-  public async getMealOnOnePage(pageNumber: number) {
+  public async getLatestMeal() :Promise<MealCrawlData> {
+    try {
+      const { data: extractionData } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=1&m=020504&s=dsmhs&boardID=54798`);
+      const $: any = cheerie.load(extractionData);  // html loading
+      const mealTitles: string[] = $(".link").text().split("\n");  // select '.link' class and extract innerText
+      const extractionMonthAndDay: string[] = mealTitles[31].match(/[0-9]+/g);  // get last post title
+      const boardSeq: string = $(".link")[0].childNodes[1].attribs.onclick.toString().match(/[0-9]+/g)[1]; // extract img source url paramter
+      return { 
+        date: `${(new Date()).getFullYear()}${this.numberPad(extractionMonthAndDay[0], 2)}${this.numberPad(extractionMonthAndDay[1], 2)}`,  // deserialize title to yyyymmdd
+        url: `${this.DSMHS_URL}${await this.getImageSrc(boardSeq, 1)}`,  // extract image source 
+        time: mealTitles[31].match(/.식/g)[0], 
+      }
+    } catch(err) {
+      Logger.error(err);
+    }
+  }
+
+  public async getMealOnOnePage(pageNumber: number): Promise<MealCrawlData[]> {
     try {
       const result: MealCrawlData[] = [];
       const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=${pageNumber}&m=020504&s=dsmhs&boardID=54798`);
@@ -47,24 +64,7 @@ export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
           url: `${this.DSMHS_URL}${await this.getImageSrc(boardSeq, pageNumber)}` 
         });
       }
-      return await this.deserializeAndSaveMealData(result);
-    } catch(err) {
-      Logger.error(err);
-    }
-  }
-
-  public async getLatestMeal() :Promise<MealCrawlData> {
-    try {
-      const { data } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=1&m=020504&s=dsmhs&boardID=54798`);
-      const $: any = cheerie.load(data);
-      const mealTitles: string[] = $(".link").text().split("\n");
-      const startIndex: number = mealTitles.length - 10;
-      const boardSeq: string = $(".link")[0].childNodes[1].attribs.onclick.toString().match(/[0-9]+/g)[1];
-      return { 
-        date: mealTitles[startIndex], 
-        url: `${this.DSMHS_URL}${await this.getImageSrc(boardSeq, 1)}`,
-        time: mealTitles[startIndex].match(/.식/g)[0],
-      }
+      return await this.deserializeOnePageData(result);
     } catch(err) {
       Logger.error(err);
     }
