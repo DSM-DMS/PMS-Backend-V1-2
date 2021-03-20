@@ -48,7 +48,7 @@ export class EventController {
     @ApiResponse({ status: 200, type: MealResponseData })
     @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiConsumes("application/json")
-  async showMealLists(@Param("datetime") datetime: string): Promise<MealResponseData> {
+  async showMealLists(@Param("datetime") datetime: string): Promise<Partial<MealResponseData>> {
     return this.eventService.getMealListsOnTheDay(datetime);
   }
 }

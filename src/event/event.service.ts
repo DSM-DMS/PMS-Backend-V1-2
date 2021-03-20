@@ -3,11 +3,21 @@ import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
 import { MealResponseData, UploadPictureDto, UploadPictureResponseData } from "./meal/meal.dto";
-import axios from "axios";
+import { MealListRepository } from "src/shared/dms/dms.meal.repository";
+import { InjectRepository } from "@nestjs/typeorm";
+import { MealList } from "src/shared/dms/dms.meal.entity";
+
+const typeList: string[] = ['breakfast', 'lunch', 'dinner'];
 
 @Injectable()
 export class EventService {
-  constructor(private mealRepository: MealRepository, private parentRepository: ParentRepository) {}
+  constructor(
+    private mealRepository: MealRepository, 
+    private parentRepository: ParentRepository,
+
+    @InjectRepository(MealListRepository, "dmsConnection")
+    private mealListRepository: MealListRepository
+  ) {}
 
   private subString(str: string): string {
     const year: string = str.substr(0, 4);
@@ -44,11 +54,14 @@ export class EventService {
     return { location: `${process.env.SERVICE_URL}/file/meal/${file.filename}` }
   }
 
-  public async getMealListsOnTheDay(datetime: string): Promise<MealResponseData> {
+  public async getMealListsOnTheDay(datetime: string): Promise<Partial<MealResponseData>> {
     const ymd: string = this.subString(datetime);
-    const { data } = await axios.get(`https://api.dsm-dms.com/meal/${ymd}`);
-    const responseData: MealResponseData = data[ymd];
-    return responseData;
+    const mealLists: MealList[] = await this.mealListRepository.findAll(ymd);
+    let mealResponseData: Partial<MealResponseData> = {};
+    typeList.forEach((type: string, index: number) => {
+      mealResponseData[type] = mealLists[index] ? mealLists[index].meal.split("||") : "";
+    });
+    return mealResponseData;
   }
 
   public async setOneByDatetime(datetime: string): Promise<Meal> {
