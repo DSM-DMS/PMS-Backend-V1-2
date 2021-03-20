@@ -26,6 +26,6 @@ export class UploadPictureDto {
 }
 
 export class UploadPictureResponseData {
-  @ApiProperty({ example: "/file/meal/test.png" })
+  @ApiProperty({ example: "http://www.domain.com/file/meal/test.png" })
   location: string;
 }
