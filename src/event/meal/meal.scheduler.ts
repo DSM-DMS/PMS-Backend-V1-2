@@ -22,7 +22,4 @@ export async function setSchedule() {
   const scheduleBreakfast = schedule.scheduleJob("0 0 10 * * *", setNewMeal);
   const scheduleLunch = schedule.scheduleJob("0 0 14 * * *", setNewMeal);
   const sheduleDinner = schedule.scheduleJob("0 0 19 * * *", setNewMeal);
-  schedule.scheduleJob("* 44 * * * *", () => {
-    console.log("hello 0 0 19 * * *0 0 19 * * *");
-  });
 }
