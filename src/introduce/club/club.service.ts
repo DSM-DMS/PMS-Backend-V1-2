@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { ClubInfoResObj } from './club.dto';
+import { ClubInfoResObj, ClubListResObj } from './club.dto';
 import { ClubRepository } from './entity/club.repository';
 
 @Injectable()
@@ -15,5 +15,12 @@ export class ClubService {
     }
     clubInfo.member = await this.clubRepository.getClubMemberAll(name);
     return clubInfo;
+  }
+
+  public async getClubList(): Promise<ClubListResObj> {
+    const clubList: ClubListResObj = {
+      clubs: await this.clubRepository.getClubList()
+    };
+    return clubList;
   }
 }
