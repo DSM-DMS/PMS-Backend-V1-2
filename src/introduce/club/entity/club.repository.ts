@@ -8,7 +8,19 @@ export class ClubRepository extends Repository<Club> {
     .select("title")
     .addSelect(`CONCAT('${process.env.DDYZD_URL}/file/', uri)`, "uri")
     .addSelect("explanation")
-    .where("title :name", { name })
+    .where("title = :name", { name })
     .getRawOne();
+  }
+
+  public async getClubMemberAll(club_name: string): Promise<string[]> {
+    const members = await this.createQueryBuilder("club")
+    .select("title")
+    .addSelect("GROUP_CONCAT(user.name)", "members")
+    .leftJoin("club.club_member", "club_member")
+    .leftJoin("club_member.user", "user")
+    .groupBy("title")
+    .having("title = :club_name", { club_name })
+    .getRawOne();
+    return members.members.split(",");
   }
 }
