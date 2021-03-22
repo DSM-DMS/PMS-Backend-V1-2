@@ -1,4 +1,5 @@
 import { EntityRepository, Repository } from "typeorm";
+import { ClubList } from "../club.dto";
 import { Club } from "./club.entity";
 
 @EntityRepository(Club)
@@ -22,5 +23,12 @@ export class ClubRepository extends Repository<Club> {
     .having("title = :club_name", { club_name })
     .getRawOne();
     return members.members.split(",");
+  }
+
+  public getClubList(): Promise<ClubList[]> {
+    return this.createQueryBuilder("club")
+    .select("club.title", "club-name")
+    .addSelect("club.uri", "picture-uri")
+    .getRawMany();
   }
 }
