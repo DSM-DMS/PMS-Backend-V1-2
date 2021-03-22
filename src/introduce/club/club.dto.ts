@@ -13,3 +13,16 @@ export class ClubInfoResObj {
   @ApiProperty({ example: "['Mary', 'Frank', 'Henry']" })
   member?: string[];
 }
+
+export class ClubList {
+  @ApiProperty({ example: "<picture-uri>" })
+  "picture-uri": string;
+
+  @ApiProperty({ example: "<club-name>" })
+  "club-name": string;
+}
+
+export class ClubListResObj {
+  @ApiProperty()
+  clubs: ClubList[];
+}
