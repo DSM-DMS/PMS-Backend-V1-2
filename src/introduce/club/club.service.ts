@@ -1,10 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ClubInfoResObj, ClubListResObj } from './club.dto';
 import { ClubRepository } from './entity/club.repository';
 
 @Injectable()
 export class ClubService {
   constructor(
+    @InjectRepository(ClubRepository, "ddyzdConnection")
     private clubRepository: ClubRepository
   ) {}
 
