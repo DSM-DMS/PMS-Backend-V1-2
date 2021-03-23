@@ -4,7 +4,7 @@ import { ClubMember } from "./club.member.entity";
 @Entity("club")
 export class Club {
   @PrimaryGeneratedColumn()
-  club_id: number;
+  id: number;
 
   @Column({ type: "varchar", length: 45, name: "name" })
   title: string;
