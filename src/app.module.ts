@@ -13,6 +13,7 @@ import { IntroduceModule } from './introduce/introduce.module';
   imports: [
     TypeOrmModule.forRoot(connectionOptions[process.env.NODE_ENV]),
     TypeOrmModule.forRoot(connectionOptions["dms"]),
+    TypeOrmModule.forRoot(connectionOptions["ddyzd"]),
     EventModule,
     CalendarModule,
     NoticeModule,

@@ -3,6 +3,9 @@ import { ConnectionOptions } from "typeorm";
 import { Meal } from "./event/meal/entity/meal.entity";
 import { Parent } from "./shared/parent/parent.entity";
 import { MealList } from "./shared/dms/dms.meal.entity";
+import { User } from "./introduce/club/user/user.entity";
+import { Club } from "./introduce/club/entity/club.entity";
+import { ClubMember } from "./introduce/club/entity/club.member.entity";
 
 interface DBConnectionOptions {
   [env: string]: ConnectionOptions;
@@ -42,6 +45,18 @@ const connectionOptions: DBConnectionOptions = {
     logging: false,
     name: "dmsConnection",
     entities: [MealList],
+  },
+  ddyzd: {
+    type: "mysql",
+    host: process.env.DDYZD_DATABASE_HOST,
+    port: +process.env.DDYZD_DATABASE_PORT,
+    username: process.env.DDYZD_DATABASE_USER,
+    password: process.env.DDYZD_DATABASE_PASSWORD,
+    database: process.env.DDYZD_DATABASE_NAME,
+    synchronize: false,
+    logging: false,
+    name: "ddyzdConnection",
+    entities: [User, Club, ClubMember],
   }
 }
 
