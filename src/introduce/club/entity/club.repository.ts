@@ -6,9 +6,9 @@ import { Club } from "./club.entity";
 export class ClubRepository extends Repository<Club> {
   public getClubInfo(name: string): Promise<Club> {
     return this.createQueryBuilder("club")
-    .select("club.title")
+    .select("club.title", "title")
     .addSelect(`CONCAT('${process.env.DDYZD_URL}/file/', club.uri)`, "uri")
-    .addSelect("club.explanation")
+    .addSelect("club.explanation", "explanation")
     .where("club.title = :name", { name })
     .getRawOne();
   }
