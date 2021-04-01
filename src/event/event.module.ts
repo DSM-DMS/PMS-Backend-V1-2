@@ -4,7 +4,7 @@ import { MealRepository } from "./meal/entity/meal.repository";
 import { EventController } from "./event.controller";
 import { EventService } from "./event.service";
 import { ParentRepository } from "../shared/parent/parent.repository";
-import { MealListRepository } from "src/shared/dms/dms.meal.repository";
+import { MealListRepository } from "../shared/dms/dms.meal.repository";
 
 @Module({
   imports: [

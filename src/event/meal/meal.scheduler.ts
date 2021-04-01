@@ -17,7 +17,7 @@ export class MealJobScheduler extends JobScheduler {
       }, 60000*30);
     }
   }
-
+  
   public setShedule() {
     schedule.scheduleJob("0 0 1 * * *", this.setNewMeal);
     schedule.scheduleJob("0 0 5 * * *", this.setNewMeal);
