@@ -1,10 +1,11 @@
 import { Logger } from "@nestjs/common";
 import axios from "axios";
 import * as cheerie from "cheerio";
+import { DataParser } from "../../shared/parser/parser.type";
 import { MealRepository } from "./entity/meal.repository";
-import { AbstractGetMealDateFactory, MealCrawlData } from "./meal.type";
+import { MealCrawlData } from "./meal.type";
 
-export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
+export class MealCrawlDataParser extends DataParser<MealCrawlData> {
   private DSMHS_URL: string = `https://dsmhs.djsch.kr`;
   
   private numberPad(n: string, width: number): string {
@@ -33,7 +34,7 @@ export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
     return meals;
   }
 
-  public async getLatestMeal() :Promise<MealCrawlData> {
+  public async getParsingData(): Promise<MealCrawlData> {
     try {
       const { data: extractionData } = await axios.get(`${this.DSMHS_URL}/boardCnts/list.do?type=default&page=1&m=020504&s=dsmhs&boardID=54798`);
       const $: any = cheerie.load(extractionData);  // html loading
@@ -70,7 +71,7 @@ export class CrawlingMealDataFactory extends AbstractGetMealDateFactory {
     }
   }
 
-  public async setLetestMeal(meal: MealCrawlData): Promise<boolean> {
+  public async setParsingData(meal: MealCrawlData): Promise<boolean> {
     try {
       await MealRepository.getQueryRepository().setCrawlingData(meal);
       return true;

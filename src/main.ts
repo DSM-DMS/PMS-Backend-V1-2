@@ -3,8 +3,8 @@ import "dotenv/config";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { Logger, ValidationPipe } from "@nestjs/common";
-import { setSchedule } from "./event/meal/meal.scheduler";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { setGlobalSchedule } from "./shared/schedule";
 
 const port: string = process.env.PORT || "3000";
 
@@ -22,7 +22,7 @@ async function bootstrap() {
   } else {
     app.enableCors();
   }
-  setSchedule();
+  setGlobalSchedule();
   const config = new DocumentBuilder()
   .setTitle("PMS")
   .setDescription("PMS API V1")
