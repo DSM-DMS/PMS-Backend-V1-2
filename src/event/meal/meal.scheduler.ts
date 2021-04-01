@@ -1,28 +1,26 @@
 import * as schedule from "node-schedule";
 
-import { AbstractGetMealDateFactory, MealCrawlData } from "./meal.type";
-import { CrawlingMealDataFactory } from "./meal.crawl";
-import { Logger } from "@nestjs/common";
+import { MealCrawlData } from "./meal.type";
+import { MealCrawlDataParser } from "./meal.crawl";
+import { JobScheduler } from "../../shared/schedule/schedule.type";
 
-const crawlingMealData: AbstractGetMealDateFactory = new CrawlingMealDataFactory();
+export class MealJobScheduler extends JobScheduler {
+  private crwalingMealData = new MealCrawlDataParser();
 
-async function setNewMeal() {
-  const newBreakfast: MealCrawlData = await crawlingMealData.getLatestMeal(); 
-  const isSaved = await crawlingMealData.setLetestMeal(newBreakfast);
-  Logger.log(`set schedule ${isSaved}`);
-  if(!isSaved) {
-    setTimeout(async () => {
-      const newBreakfast: MealCrawlData = await crawlingMealData.getLatestMeal(); 
-      await crawlingMealData.setLetestMeal(newBreakfast);
-    }, 60000*30);
+  private async setNewMeal() {
+    const newBreakfast: MealCrawlData = await this.crwalingMealData.getParsingData(); 
+    const isSaved = await this.crwalingMealData.setParsingData(newBreakfast);
+    if(!isSaved) {
+      setTimeout(async () => {
+        const newBreakfast: MealCrawlData = await this.crwalingMealData.getParsingData(); 
+        await this.crwalingMealData.setParsingData(newBreakfast);
+      }, 60000*30);
+    }
   }
-}
 
-export async function setSchedule() {
-  const scheduleBreakfast = schedule.scheduleJob("0 0 10 * * *", setNewMeal);
-  const scheduleLunch = schedule.scheduleJob("0 0 14 * * *", setNewMeal);
-  const sheduleDinner = schedule.scheduleJob("0 0 19 * * *", setNewMeal);
-  schedule.scheduleJob("* 44 * * * *", () => {
-    console.log("hello 0 0 19 * * *0 0 19 * * *");
-  });
+  public setShedule() {
+    schedule.scheduleJob("0 0 1 * * *", this.setNewMeal);
+    schedule.scheduleJob("0 0 5 * * *", this.setNewMeal);
+    schedule.scheduleJob("0 0 10 * * *", this.setNewMeal);
+  }
 }
