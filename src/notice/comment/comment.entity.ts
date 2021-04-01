@@ -1,5 +1,6 @@
 import { Parent } from "../../shared/parent/parent.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Notice } from "../entity/notice.entity";
 
 @Entity("comment")
 export class Comment {
@@ -22,6 +23,9 @@ export class Comment {
   @ManyToOne(type => Comment, comment => comment.comment)
   @JoinColumn({ name: "commet_id" })
   parent_comment: Comment;
+
+  @ManyToOne(type => Notice, notice => notice.comments)
+  notice: Notice;
 
   name: string;
 }
