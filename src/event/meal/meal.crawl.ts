@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import axios from "axios";
 import * as cheerie from "cheerio";
-import { DataParser } from "../../shared/parent/parser.type";
+import { DataParser } from "../../shared/parser/parser.type";
 import { MealRepository } from "./entity/meal.repository";
 import { MealCrawlData } from "./meal.type";
 
