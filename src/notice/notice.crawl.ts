@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { DataParser } from "../shared/parser/parser.type";
+import { NoticeRepository } from "./entity/notice.repository";
 import { NoticeCrawlData } from "./notice.type";
 
 export class NoticeCrawlDataParser extends DataParser<NoticeCrawlData> {
@@ -8,6 +9,11 @@ export class NoticeCrawlDataParser extends DataParser<NoticeCrawlData> {
   private static instance: NoticeCrawlDataParser;
   private DSMHS_URL: string = `https://dsmhs.djsch.kr`;
   private noticeBody: string = "";
+
+  private getUploadDate(): string {
+    const date: Date = new Date();
+    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+  }
 
   private getNoticeTitle(domContent: any): string {
     return domContent.childNodes[4].childNodes[1].data;
@@ -43,11 +49,18 @@ export class NoticeCrawlDataParser extends DataParser<NoticeCrawlData> {
     this.subStringNoticeBody(boardText.childNodes[6].children);
     const body: string = this.noticeBody;
     this.noticeBody = "";
-    const contentMedia: string[] = this.getNoticeContentMedia(boardText);
-    return { body, title, contentMedia };
+    const attach: string[] = this.getNoticeContentMedia(boardText);
+    return { body, title, attach };
   }
 
   public async setParsingData(data: NoticeCrawlData) {
-    
+    await NoticeRepository.getQueryRepository().createQueryBuilder()
+    .insert()
+    .values([{
+      title: data.title,
+      body: data.body,
+      "upload-date": new Date(this.getUploadDate()),
+    }])
+    .execute();
   }
 }
