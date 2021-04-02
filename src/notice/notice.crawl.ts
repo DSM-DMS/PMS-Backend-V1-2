@@ -44,7 +44,7 @@ export class NoticeCrawlDataParser extends DataParser<NoticeCrawlData> {
   }
 
   public static getInstance(): NoticeCrawlDataParser {
-    return NoticeCrawlDataParser.instance || (NoticeCrawlDataParser.instance = new NoticeCrawlDataParser); 
+    return NoticeCrawlDataParser.instance || (NoticeCrawlDataParser.instance = new NoticeCrawlDataParser()); 
   }
 
   public async getParsingData(): Promise<NoticeCrawlData> {
