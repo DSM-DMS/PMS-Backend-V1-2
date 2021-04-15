@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { connectionOptions } from "./ormconfig";
-import { HttpErrorFilter } from "./shared/http-error.filter";
+import { HttpErrorFilter } from "./shared/exception/http-error.filter";
 import { EventModule } from "./event/event.module";
 import { MealStaticFileMiddleware } from "./middleware/static.middleware";
 import { CalendarModule } from './calendar/calendar.module';
