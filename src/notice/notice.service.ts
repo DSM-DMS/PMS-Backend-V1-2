@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { NoticeRepository } from "./entity/notice.repository";
-import { NoticeInfoResObj } from "./notice.dto";
+import { NoticeInfoResObj } from "./dto/notice.dto";
 
 @Injectable()
 export class NoticeService {

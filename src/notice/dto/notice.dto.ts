@@ -1,4 +1,4 @@
-import { Comment } from "./comment/comment.entity";
+import { Comment } from "../comment/comment.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class NoticeInfoResObj {
