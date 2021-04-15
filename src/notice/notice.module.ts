@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module } from "@nestjs/common";
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { NoticeRepository } from './entity/notice.repository';
-import { NoticeController } from './notice.controller';
-import { NoticeService } from './notice.service';
+import { NoticeRepository } from "./entity/notice.repository";
+import { NoticeController } from "./notice.controller";
+import { NoticeService } from "./notice.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([NoticeRepository])],
