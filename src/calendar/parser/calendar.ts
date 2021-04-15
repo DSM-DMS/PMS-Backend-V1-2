@@ -1,4 +1,4 @@
-import { AbstractCalendarDataFactory, Calendar } from "./calendar.type";
+import { AbstractCalendarDataFactory, Calendar } from "../type/calendar.type";
 import axios from "axios";
 
 export class CalendarDataFactory extends AbstractCalendarDataFactory {

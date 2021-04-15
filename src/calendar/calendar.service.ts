@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { CalendarDataFactory } from "./calendar";
-import { Calendar } from "./calendar.type";
+import { CalendarDataFactory } from "./parser/calendar";
+import { Calendar } from "./type/calendar.type";
 import * as schedule from "node-schedule";
 
 @Injectable()
