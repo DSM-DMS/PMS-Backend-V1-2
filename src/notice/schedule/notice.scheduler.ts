@@ -1,9 +1,9 @@
 import * as schedule from "node-schedule";
-import { JobScheduler } from "src/shared/schedule/schedule.type";
-import { Notice } from "./entity/notice.entity";
-import { NoticeRepository } from "./entity/notice.repository";
-import { NoticeCrawlDataParser } from "./notice.crawl";
-import { NoticeCrawlData } from './notice.type';
+import { JobScheduler } from "../../shared/schedule/schedule.type";
+import { Notice } from "../entity/notice.entity";
+import { NoticeRepository } from "../entity/notice.repository";
+import { NoticeCrawlDataParser } from "../crawl/notice.crawl";
+import { NoticeCrawlData } from '../type/notice.type';
 
 export class NoticeJobScheduler extends JobScheduler {
   private noticeDataParser = NoticeCrawlDataParser.getInstance();

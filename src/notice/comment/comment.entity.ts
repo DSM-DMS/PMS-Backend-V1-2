@@ -25,6 +25,7 @@ export class Comment {
   parent_comment: Comment;
 
   @ManyToOne(type => Notice, notice => notice.comments)
+  @JoinColumn({ name: "notice_id" })
   notice: Notice;
 
   name: string;
