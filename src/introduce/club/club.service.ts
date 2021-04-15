@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ClubInfoResObj, ClubListResObj } from './club.dto';
+import { ClubInfoResObj, ClubListResObj } from './dto/club.dto';
 import { ClubRepository } from './entity/club.repository';
 
 @Injectable()
