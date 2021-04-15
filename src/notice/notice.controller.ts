@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards } from "@nestjs/common";
 import { ApiTags, ApiBearerAuth, ApiHeader, ApiOperation, ApiResponse, ApiConsumes, ApiBody } from "@nestjs/swagger";
-import { AuthGuard } from "src/shared/authentication/auth.guard";
-import { NoticeInfoResObj } from "./notice.dto";
+import { AuthGuard } from "../shared/authentication/auth.guard";
+import { NoticeInfoResObj } from "./dto/notice.dto";
 import { NoticeService } from "./notice.service";
 
 @ApiTags("notice")
