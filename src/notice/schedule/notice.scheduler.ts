@@ -1,5 +1,5 @@
 import * as schedule from "node-schedule";
-import { JobScheduler } from "src/shared/schedule/schedule.type";
+import { JobScheduler } from "../../shared/schedule/schedule.type";
 import { Notice } from "../entity/notice.entity";
 import { NoticeRepository } from "../entity/notice.repository";
 import { NoticeCrawlDataParser } from "../crawl/notice.crawl";
