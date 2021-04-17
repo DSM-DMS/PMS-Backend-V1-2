@@ -21,10 +21,10 @@ export class Comment {
   comment: Comment[];
 
   @ManyToOne(type => Comment, comment => comment.comment)
-  @JoinColumn({ name: "commet_id" })
+  @JoinColumn({ name: "comment_id" })
   parent_comment: Comment;
 
-  @ManyToOne(type => Notice, notice => notice.comments)
+  @ManyToOne(type => Notice, notice => notice.comment)
   @JoinColumn({ name: "notice_id" })
   notice: Notice;
 
