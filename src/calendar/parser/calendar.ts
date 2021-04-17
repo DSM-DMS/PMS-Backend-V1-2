@@ -4,7 +4,7 @@ import axios from "axios";
 export class CalendarDataFactory extends AbstractCalendarDataFactory {
   constructor() {
     super();
-    this.setCalendar();
+    this.setParsingData();
   }
 
   private subString(str: string): string {
@@ -12,7 +12,7 @@ export class CalendarDataFactory extends AbstractCalendarDataFactory {
     return `${str.substr(0, 4)}-${str.substr(4, 2)}-${str.substr(6, 2)}`;
   }
 
-  public async setCalendar(): Promise<void> {
+  public async setParsingData(): Promise<void> {
     const { data } = await axios.get(this.getUrl());
     if(!data.SchoolSchedule) {
       return;
@@ -27,7 +27,7 @@ export class CalendarDataFactory extends AbstractCalendarDataFactory {
     this.fromYMD = (+(schoolEvents[schoolEvents.length - 1].AA_YMD) + 1).toString();
   }
 
-  public async getCalender(): Promise<Calendar> {
+  public async getParsingData(): Promise<Calendar> {
     return this.calendar;
   }
 }

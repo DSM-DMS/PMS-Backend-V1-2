@@ -1,8 +1,10 @@
+import { DataParser } from "../../shared/parser/parser.type";
+
 export interface Calendar {
   [date: string]: string[];
 }
 
-export abstract class AbstractCalendarDataFactory {
+export abstract class AbstractCalendarDataFactory extends DataParser<any> {
   protected readonly apiKey: string;
   protected fromYMD: string;
   protected toYMD: string;
@@ -13,6 +15,7 @@ export abstract class AbstractCalendarDataFactory {
   }
 
   constructor() {
+    super();
     this.apiKey = process.env.NEIS_API_KEY;
     const year: number = (new Date()).getFullYear();
     this.fromYMD = `${year}0101`;
@@ -20,6 +23,6 @@ export abstract class AbstractCalendarDataFactory {
     this.calendar = {};
   }
 
-  abstract setCalendar(): Promise<void>;
-  abstract getCalender(): Promise<Calendar>;
+  abstract setParsingData(): Promise<void>;
+  abstract getParsingData(): Promise<Calendar>;
 }
