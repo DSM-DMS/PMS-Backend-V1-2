@@ -1,7 +1,11 @@
 import { DataParser } from "../../shared/parser/parser.type";
 
-export interface Calendar {
+interface Schedule {
   [date: string]: string[];
+}
+
+export interface Calendar {
+  [month: number]: Schedule;
 }
 
 export abstract class AbstractCalendarDataFactory extends DataParser<any> {
