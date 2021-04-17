@@ -2,6 +2,9 @@ import { Comment } from "../comment/comment.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class NoticeInfoResObj {
+  @ApiProperty({ example: "notice-id" })
+  id: number;
+
   @ApiProperty({ example: "2021-04-01" })
   "upload-date": Date;
 
