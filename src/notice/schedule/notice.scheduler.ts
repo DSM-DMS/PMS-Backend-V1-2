@@ -8,7 +8,7 @@ import { NoticeCrawlData } from '../type/notice.type';
 export class NoticeJobScheduler extends JobScheduler {
   private noticeDataParser = NoticeCrawlDataParser.getInstance();
 
-  public setShedule() {
+  public setSchedule() {
     schedule.scheduleJob("0 0 12 * * *", async () => {
       const noticeCrawlData: NoticeCrawlData = await this.noticeDataParser.getParsingData();
       const exNotice: Notice = await NoticeRepository.getQueryRepository().findOne({ where: { title: noticeCrawlData.title } });

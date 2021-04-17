@@ -1,3 +1,3 @@
 export abstract class JobScheduler {
-  public abstract setShedule(): void;
+  public abstract setSchedule(): void;
 }

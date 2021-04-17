@@ -9,7 +9,7 @@ const setGlobalSchedule = () => {
   ];
 
   for(const schedule of schedules) {
-    schedule.setShedule();
+    schedule.setSchedule();
   }
 }
 
