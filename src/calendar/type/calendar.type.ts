@@ -4,6 +4,14 @@ export interface Calendar {
   [date: string]: string[];
 }
 
+interface Schedule {
+  [date: string]: string[];
+}
+
+export interface Calendar {
+  [month: number]: Schedule;
+}
+
 export abstract class AbstractCalendarDataFactory extends DataParser<any> {
   protected readonly apiKey: string;
   protected fromYMD: string;

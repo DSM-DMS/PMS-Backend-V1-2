@@ -19,10 +19,12 @@ export class CalendarDataFactory extends AbstractCalendarDataFactory {
     }
     const schoolEvents: any[] = data.SchoolSchedule[1].row;
     schoolEvents.forEach(event => {
+      const month: number = +event.AA_YMD.substr(4, 2);
+      this.calendar[month] = this.calendar[month] ? this.calendar[month] : {};
       const ymd: string = this.subString(event.AA_YMD);
       const eventOnTheYMD: string[] = this.calendar[ymd];
-      this.calendar[ymd] = eventOnTheYMD ? eventOnTheYMD : [];
-      this.calendar[ymd].push(event.EVENT_NM); 
+      this.calendar[month][ymd] = eventOnTheYMD ? eventOnTheYMD : [];
+      this.calendar[month][ymd].push(event.EVENT_NM); 
     });
     this.fromYMD = (+(schoolEvents[schoolEvents.length - 1].AA_YMD) + 1).toString();
   }
