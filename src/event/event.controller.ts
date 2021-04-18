@@ -4,7 +4,7 @@ import { ApiBody, ApiConsumes, ApiHeader, ApiTags, ApiBearerAuth, ApiResponse, A
 import { Auth } from "../shared/authentication/auth.decorator";
 import { AuthGuard } from "../shared/authentication/auth.guard";
 import { EventService } from './event.service';
-import { multerUploadOption } from "./event.type";
+import { multerUploadOption } from "./type/event.type";
 import { MealResponseData, UploadPictureDto, UploadPictureResponseData } from "./meal/meal.dto";
 
 @ApiTags("event")

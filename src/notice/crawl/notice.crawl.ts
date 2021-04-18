@@ -1,9 +1,9 @@
 import { Logger } from "@nestjs/common";
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { DataParser } from "../shared/parser/parser.type";
-import { NoticeRepository } from "./entity/notice.repository";
-import { NoticeCrawlData } from "./notice.type";
+import { DataParser } from "../../shared/parser/parser.type";
+import { NoticeRepository } from "../entity/notice.repository";
+import { NoticeCrawlData } from "../type/notice.type";
 
 export class NoticeCrawlDataParser extends DataParser<NoticeCrawlData> {
   private constructor() { super() };
@@ -44,7 +44,7 @@ export class NoticeCrawlDataParser extends DataParser<NoticeCrawlData> {
   }
 
   public static getInstance(): NoticeCrawlDataParser {
-    return NoticeCrawlDataParser.instance || (NoticeCrawlDataParser.instance = new NoticeCrawlDataParser); 
+    return NoticeCrawlDataParser.instance || (NoticeCrawlDataParser.instance = new NoticeCrawlDataParser()); 
   }
 
   public async getParsingData(): Promise<NoticeCrawlData> {

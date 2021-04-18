@@ -8,6 +8,7 @@ import { Club } from "./introduce/club/entity/club.entity";
 import { ClubMember } from "./introduce/club/entity/club.member.entity";
 import { Notice } from "./notice/entity/notice.entity";
 import { Comment } from "./notice/comment/comment.entity";
+import { NoticeAttach } from "./notice/entity/notice-attach.entity";
 
 interface DBConnectionOptions {
   [env: string]: ConnectionOptions;
@@ -15,7 +16,7 @@ interface DBConnectionOptions {
 
 const connectionOptions: DBConnectionOptions = {
   development: {
-    type: "mysql",
+    type: "postgres",
     host: process.env.DEVELOPMENT_DATABASE_HOST,
     port: +process.env.DEVELOPMENT_DATABASE_PORT,
     username: process.env.DEVELOPMENT_DATABASE_USER,
@@ -23,7 +24,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.DEVELOPMENT_DATABASE_NAME,
     synchronize: true,
     logging: true,
-    entities: [Meal, Parent, Notice, Comment],
+    entities: [Meal, Parent, Notice, Comment, NoticeAttach],
   },
   production: {
     type: "postgres",
@@ -34,7 +35,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.PRODUCTION_DATABASE_NAME,
     synchronize: false,
     logging: true,
-    entities: [Meal, Parent, Notice, Comment],
+    entities: [Meal, Parent, Notice, Comment, NoticeAttach],
   },
   dms: {
     type: "mysql",

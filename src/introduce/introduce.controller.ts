@@ -2,7 +2,7 @@ import { BadRequestException, Controller, Get, Param, UseGuards } from "@nestjs/
 import { ClubService } from "./club/club.service";
 import { ApiTags, ApiBearerAuth, ApiHeader, ApiOperation, ApiConsumes, ApiResponse } from "@nestjs/swagger";
 import { AuthGuard } from "../shared/authentication/auth.guard";
-import { ClubInfoResObj, ClubListResObj } from "./club/club.dto";
+import { ClubInfoResObj, ClubListResObj } from "./club/dto/club.dto";
 
 @ApiTags("introduce")
 @ApiBearerAuth()
