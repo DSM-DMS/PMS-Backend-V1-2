@@ -15,7 +15,7 @@ export class Comment {
 
   @ManyToOne(type => Parent)
   @JoinColumn({ name: "user_email" })
-  parent: Parent;
+  user: Parent;
 
   @OneToMany(type => Comment, comment => comment.parent_comment)
   comment: Comment[];
@@ -27,6 +27,4 @@ export class Comment {
   @ManyToOne(type => Notice, notice => notice.comment)
   @JoinColumn({ name: "notice_id" })
   notice: Notice;
-
-  name: string;
 }
