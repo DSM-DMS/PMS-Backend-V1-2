@@ -15,18 +15,16 @@ export class Comment {
 
   @ManyToOne(type => Parent)
   @JoinColumn({ name: "user_email" })
-  parent: Parent;
+  user: Parent;
 
   @OneToMany(type => Comment, comment => comment.parent_comment)
   comment: Comment[];
 
   @ManyToOne(type => Comment, comment => comment.comment)
-  @JoinColumn({ name: "commet_id" })
+  @JoinColumn({ name: "comment_id" })
   parent_comment: Comment;
 
-  @ManyToOne(type => Notice, notice => notice.comments)
+  @ManyToOne(type => Notice, notice => notice.comment)
   @JoinColumn({ name: "notice_id" })
   notice: Notice;
-
-  name: string;
 }
