@@ -1,9 +1,5 @@
 import { DataParser } from "../../shared/parser/parser.type";
 
-export interface Calendar {
-  [date: string]: string[];
-}
-
 interface Schedule {
   [date: string]: string[];
 }
