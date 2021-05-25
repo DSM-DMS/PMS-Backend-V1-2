@@ -14,7 +14,6 @@ export class IntroduceController {
   ) {}
 
   @Get("/clubs")
-  @UseGuards(new AuthGuard)
   @ApiOperation({ summary: "동아리 API", description: "동아리 정보를 객체로 반환" })
     @ApiResponse({ status: 200, type: [ClubListResObj] })
     @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })

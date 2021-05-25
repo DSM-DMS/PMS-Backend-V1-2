@@ -12,7 +12,6 @@ export class NoticeController {
   constructor(private noticeService: NoticeService) {}
 
   @Get("/")
-  @UseGuards(new AuthGuard())
   @ApiOperation({ summary: "공지사항 목록 API", description: "성공 시 상태 코드 200 반환" })
   @ApiResponse({ status: 200, type: NoticeResObj })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })

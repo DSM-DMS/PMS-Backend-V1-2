@@ -43,7 +43,6 @@ export class EventController {
   }
 
   @Get("/meal/:datetime")
-  @UseGuards(new AuthGuard())
   @ApiOperation({ summary: "급식 목록 API",  description: "급식 목록을 객체로 반환" })
     @ApiResponse({ status: 200, type: MealResponseData })
     @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
