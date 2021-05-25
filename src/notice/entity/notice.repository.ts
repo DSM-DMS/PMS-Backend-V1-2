@@ -1,5 +1,5 @@
 import { EntityRepository, getCustomRepository, Repository } from "typeorm";
-import { NoticeResObj } from "../dto/notice.dto";
+import { NoticeListResponse } from "../dto/response/notice-list.response";
 import { Notice } from "./notice.entity";
 
 @EntityRepository(Notice)
@@ -8,7 +8,7 @@ export class NoticeRepository extends Repository<Notice> {
     return getCustomRepository(NoticeRepository);
   }
 
-  public getNoticeList(): Promise<NoticeResObj[]> {
+  public getNoticeList(): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")

@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { NoticeRepository } from "./entity/notice.repository";
-import { NoticeInfoResObj, NoticeResObj } from "./dto/notice.dto";
 import { Notice } from "./entity/notice.entity";
 import { Comment } from "./comment/comment.entity";
 import { CommentRepository } from "./comment/comment.repository";
+import { NoticeListResponse } from "./dto/response/notice-list.response";
+import { NoticeInfoResponse } from "./dto/response/notice-info.response";
 
 @Injectable()
 export class NoticeService {
@@ -12,11 +13,11 @@ export class NoticeService {
     private commentRepository: CommentRepository,
   ) {}
 
-  public getNoticeList(): Promise<NoticeResObj[]> {
+  public getNoticeList(): Promise<NoticeListResponse[]> {
     return this.noticeRepository.getNoticeList();
   }
 
-  public async getNoticeInfo(notice_id: number): Promise<NoticeInfoResObj> {
+  public async getNoticeInfo(notice_id: number): Promise<NoticeInfoResponse> {
     const notice: Notice = await this.noticeRepository.getNoticeInfo(notice_id);
     await Promise.all(
       notice.comment.map((comment: Comment) => {

@@ -1,18 +1,7 @@
-import { Comment } from "../comment/comment.entity";
+import { Comment } from "../../comment/comment.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class NoticeResObj {
-  @ApiProperty({ example: "notice-id" })
-  id: number;
-
-  @ApiProperty({ example: "2021-04-01" })
-  "upload-date": Date;
-
-  @ApiProperty({ example: "2020학년도 2학기 시간표 안내" })
-  title: string;
-}
-
-export class NoticeInfoResObj {
+export class NoticeInfoResponse {
   @ApiProperty({ example: "notice-id" })
   id: number;
 
