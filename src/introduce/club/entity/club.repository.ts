@@ -28,6 +28,7 @@ export class ClubRepository extends Repository<Club> {
   public getClubList(): Promise<ClubList[]> {
     return this.createQueryBuilder("club")
     .select("club.title", "club-name")
+    .addSelect("club.explanation", "explanation")
     .addSelect(`CONCAT('${process.env.DDYZD_URL}/file/', club.uri)`, "picture-uri")
     .getRawMany();
   }
