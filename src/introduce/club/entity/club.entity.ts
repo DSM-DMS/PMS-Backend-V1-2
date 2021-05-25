@@ -15,6 +15,6 @@ export class Club {
   @Column({ name: "description" })
   explanation: string;
 
-  @OneToMany(type => ClubMember, member => member.club)
+  @OneToMany((type) => ClubMember, (member) => member.club)
   club_member: ClubMember[];
 }

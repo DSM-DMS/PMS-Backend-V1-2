@@ -15,5 +15,5 @@ export class Parent {
   user_role: string;
 
   @Column({ nullable: true })
-  provider: string; 
+  provider: string;
 }

@@ -1,14 +1,14 @@
 import "dotenv/config";
 import { ConnectionOptions } from "typeorm";
-import { Meal } from "./event/meal/entity/meal.entity";
-import { Parent } from "./shared/parent/parent.entity";
-import { MealList } from "./shared/dms/dms.meal.entity";
-import { User } from "./introduce/club/user/user.entity";
-import { Club } from "./introduce/club/entity/club.entity";
-import { ClubMember } from "./introduce/club/entity/club.member.entity";
-import { Notice } from "./notice/entity/notice.entity";
-import { Comment } from "./notice/comment/comment.entity";
-import { NoticeAttach } from "./notice/entity/notice-attach.entity";
+import { Meal } from "../../event/meal/entity/meal.entity";
+import { Parent } from "../parent/parent.entity";
+import { MealList } from "../dms/dms.meal.entity";
+import { User } from "../../introduce/club/user/user.entity";
+import { Club } from "../../introduce/club/entity/club.entity";
+import { ClubMember } from "../../introduce/club/entity/club.member.entity";
+import { Notice } from "../../notice/entity/notice.entity";
+import { Comment } from "../../notice/comment/comment.entity";
+import { NoticeAttach } from "../../notice/entity/notice-attach.entity";
 
 interface DBConnectionOptions {
   [env: string]: ConnectionOptions;
@@ -60,7 +60,7 @@ const connectionOptions: DBConnectionOptions = {
     logging: false,
     name: "ddyzdConnection",
     entities: [User, Club, ClubMember],
-  }
-}
+  },
+};
 
 export { connectionOptions };

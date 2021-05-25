@@ -18,21 +18,30 @@ export class NoticeService {
 
   public async getNoticeInfo(notice_id: number): Promise<NoticeInfoResObj> {
     const notice: Notice = await this.noticeRepository.getNoticeInfo(notice_id);
-    await Promise.all(notice.comment.map((comment: Comment) => {
-      return this.setLargeComments(comment);
-    }));
-    return { ...notice, attach: notice.attach.map(attach => attach.file_name) };
+    await Promise.all(
+      notice.comment.map((comment: Comment) => {
+        return this.setLargeComments(comment);
+      }),
+    );
+    return {
+      ...notice,
+      attach: notice.attach.map((attach) => attach.file_name),
+    };
   }
 
   private async setLargeComments(comment: Comment) {
-    const largeComments: Comment[] = await this.commentRepository.getLargeComment(comment.id);
-    if(!largeComments) {
+    const largeComments: Comment[] = await this.commentRepository.getLargeComment(
+      comment.id,
+    );
+    if (!largeComments) {
       return;
     } else {
       comment.comment = largeComments;
-      await Promise.all(comment.comment.map((comment: Comment) => {
-        return this.setLargeComments(comment);
-      }));
+      await Promise.all(
+        comment.comment.map((comment: Comment) => {
+          return this.setLargeComments(comment);
+        }),
+      );
     }
   }
 }

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString } from "class-validator"
+import { IsString } from "class-validator";
 
 export class MealResponseData {
   @ApiProperty({ example: "<breakfast image or list>" })
@@ -21,7 +21,7 @@ export class UploadPictureDto {
   @IsString()
   public readonly mealcode: string;
 
-  @ApiProperty({ type: 'string', format: 'binary' })
+  @ApiProperty({ type: "string", format: "binary" })
   file: any;
 }
 

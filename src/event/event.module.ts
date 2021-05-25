@@ -9,7 +9,7 @@ import { MealListRepository } from "../shared/dms/dms.meal.repository";
 @Module({
   imports: [
     TypeOrmModule.forFeature([MealRepository, ParentRepository]),
-    TypeOrmModule.forFeature([MealListRepository], "dmsConnection")
+    TypeOrmModule.forFeature([MealListRepository], "dmsConnection"),
   ],
   controllers: [EventController],
   providers: [EventService],

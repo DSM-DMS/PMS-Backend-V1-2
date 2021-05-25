@@ -6,7 +6,7 @@ export class NoticeAttach {
   @PrimaryColumn({ type: "varchar", length: 512 })
   file_name: string;
 
-  @ManyToOne(type => Notice, notice => notice.attach) 
+  @ManyToOne((type) => Notice, (notice) => notice.attach)
   @JoinColumn({ name: "notice_id" })
   notice: Notice;
 }

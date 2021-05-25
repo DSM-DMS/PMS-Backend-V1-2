@@ -21,7 +21,7 @@ export abstract class AbstractCalendarDataFactory extends DataParser<any> {
   constructor() {
     super();
     this.apiKey = process.env.NEIS_API_KEY;
-    const year: number = (new Date()).getFullYear();
+    const year: number = new Date().getFullYear();
     this.fromYMD = `${year}0101`;
     this.toYMD = `${year}1231`;
     this.calendar = {};

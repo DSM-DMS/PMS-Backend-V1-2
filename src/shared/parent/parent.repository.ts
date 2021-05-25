@@ -10,9 +10,9 @@ export class ParentRepository extends Repository<Parent> {
 
   public async findByEmail(email: string): Promise<Parent> {
     const parent: Parent = await this.createQueryBuilder("parent")
-    .where("parent.email = :email", { email })
-    .getOne();
-    if(!parent) {
+      .where("parent.email = :email", { email })
+      .getOne();
+    if (!parent) {
       throw new NotFoundException("Not found user");
     }
     return parent;
