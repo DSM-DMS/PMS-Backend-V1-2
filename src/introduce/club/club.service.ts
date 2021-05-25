@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ClubInfoResObj, ClubListResObj } from "./dto/club.dto";
+import { ClubInfoResponse } from "./dto/response/club-info.response";
+import { ClubListResponse } from "./dto/response/club-list.response";
 import { ClubRepository } from "./entity/club.repository";
 
 @Injectable()
@@ -10,8 +11,8 @@ export class ClubService {
     private clubRepository: ClubRepository,
   ) {}
 
-  public async getClubInfo(name: string): Promise<ClubInfoResObj> {
-    const clubInfo: ClubInfoResObj = await this.clubRepository.getClubInfo(
+  public async getClubInfo(name: string): Promise<ClubInfoResponse> {
+    const clubInfo: ClubInfoResponse = await this.clubRepository.getClubInfo(
       name,
     );
     if (!clubInfo) {
@@ -21,8 +22,8 @@ export class ClubService {
     return clubInfo;
   }
 
-  public async getClubList(): Promise<ClubListResObj> {
-    const clubList: ClubListResObj = {
+  public async getClubList(): Promise<ClubListResponse> {
+    const clubList: ClubListResponse = {
       clubs: await this.clubRepository.getClubList(),
     };
     return clubList;

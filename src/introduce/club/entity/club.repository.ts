@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from "typeorm";
-import { ClubList } from "../dto/club.dto";
+import { ClubList } from "../dto/response/club-list.response";
 import { Club } from "./club.entity";
 
 @EntityRepository(Club)

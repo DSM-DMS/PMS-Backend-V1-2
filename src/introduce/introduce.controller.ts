@@ -15,7 +15,8 @@ import {
   ApiResponse,
 } from "@nestjs/swagger";
 import { AuthGuard } from "../shared/authentication/auth.guard";
-import { ClubInfoResObj, ClubListResObj } from "./club/dto/club.dto";
+import { ClubList } from "./club/dto/response/club-list.response";
+import { ClubInfoResponse } from "./club/dto/response/club-info.response";
 
 @ApiTags("introduce")
 @ApiBearerAuth()
@@ -29,7 +30,7 @@ export class IntroduceController {
     summary: "동아리 API",
     description: "동아리 정보를 객체로 반환",
   })
-  @ApiResponse({ status: 200, type: [ClubListResObj] })
+  @ApiResponse({ status: 200, type: [ClubList] })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiConsumes("application/json")
   getClubList() {
@@ -42,7 +43,7 @@ export class IntroduceController {
     summary: "동아리 리스트 API",
     description: "동아리 리스트 목록을 객체로 반환",
   })
-  @ApiResponse({ status: 200, type: ClubInfoResObj })
+  @ApiResponse({ status: 200, type: ClubInfoResponse })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiConsumes("application/json")
