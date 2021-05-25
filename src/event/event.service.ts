@@ -6,14 +6,12 @@ import {
 import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
-import {
-  MealResponseData,
-  UploadPictureDto,
-  UploadPictureResponseData,
-} from "./meal/meal.dto";
 import { MealListRepository } from "../shared/dms/dms.meal.repository";
 import { InjectRepository } from "@nestjs/typeorm";
 import { MealList } from "../shared/dms/dms.meal.entity";
+import { MealResponse } from "./meal/dto/response/meal.response";
+import { UploadPictureRequest } from "./meal/dto/request/upload-picture.request";
+import { UploadPictureResponse } from "./meal/dto/response/upload-picture.response";
 
 const typeList: string[] = ["breakfast", "lunch", "dinner"];
 
@@ -34,10 +32,8 @@ export class EventService {
     return `${year}-${month}-${day}`;
   }
 
-  public async getPicturesOnTheDay(
-    datetime: string,
-  ): Promise<MealResponseData> {
-    const response: MealResponseData = await this.mealRepository.getOneByDatetimeWithPicture(
+  public async getPicturesOnTheDay(datetime: string): Promise<MealResponse> {
+    const response: MealResponse = await this.mealRepository.getOneByDatetimeWithPicture(
       datetime,
     );
     if (!response) {
@@ -49,8 +45,8 @@ export class EventService {
   public async setPictureOnTheDay(
     file: Express.Multer.File,
     email: string,
-    body: UploadPictureDto,
-  ): Promise<UploadPictureResponseData> {
+    body: UploadPictureRequest,
+  ): Promise<UploadPictureResponse> {
     if (!(await this.parentRepository.checkAdminUserEmail(email))) {
       throw new ForbiddenException("Fobidden user");
     }
@@ -77,10 +73,10 @@ export class EventService {
 
   public async getMealListsOnTheDay(
     datetime: string,
-  ): Promise<Partial<MealResponseData>> {
+  ): Promise<Partial<MealResponse>> {
     const ymd: string = this.subString(datetime);
     const mealLists: MealList[] = await this.mealListRepository.findAll(ymd);
-    let mealResponseData: Partial<MealResponseData> = {};
+    let mealResponseData: Partial<MealResponse> = {};
     typeList.forEach((type: string, index: number) => {
       mealResponseData[type] = mealLists[index]
         ? mealLists[index].meal.split("||")
