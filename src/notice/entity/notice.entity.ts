@@ -16,9 +16,9 @@ export class Notice {
   @Column("text")
   body: string;
 
-  @OneToMany(type => Comment, comment => comment.notice)
+  @OneToMany((type) => Comment, (comment) => comment.notice)
   comment: Comment[];
 
-  @OneToMany(type => NoticeAttach, attach => attach.notice)
+  @OneToMany((type) => NoticeAttach, (attach) => attach.notice)
   attach: NoticeAttach[];
 }

@@ -8,7 +8,10 @@ export class CalendarService {
   private calendar: CalendarDataFactory;
   constructor() {
     this.calendar = new CalendarDataFactory();
-    schedule.scheduleJob("0 0 0 1 * *", this.calendar.setParsingData.bind(this.calendar));
+    schedule.scheduleJob(
+      "0 0 0 1 * *",
+      this.calendar.setParsingData.bind(this.calendar),
+    );
   }
 
   public async getCalendar(): Promise<Calendar> {

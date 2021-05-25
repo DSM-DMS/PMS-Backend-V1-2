@@ -12,7 +12,10 @@ export class MealApiIndexRepository extends Repository<MealApiIndex> {
     return indexes ? indexes : await this.manager.save(this.create({ id: 1 }));
   }
 
-  public async setApiIndex(time: keyof MealApiIndex, index: number): Promise<void> {
+  public async setApiIndex(
+    time: keyof MealApiIndex,
+    index: number,
+  ): Promise<void> {
     const indexes: MealApiIndex = await this.getOrMake();
     indexes[time] = index;
     await this.manager.save(indexes);

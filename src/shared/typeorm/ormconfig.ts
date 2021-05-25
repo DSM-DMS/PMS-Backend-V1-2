@@ -60,7 +60,7 @@ const connectionOptions: DBConnectionOptions = {
     logging: false,
     name: "ddyzdConnection",
     entities: [User, Club, ClubMember],
-  }
-}
+  },
+};
 
 export { connectionOptions };

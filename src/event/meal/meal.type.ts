@@ -28,7 +28,7 @@ export abstract class MealListDataFactory {
       const res = await axios.get(this.getUrl());
       this.mealServiceDietInfo = res.data.mealServiceDietInfo;
       return res.data.mealServiceDietInfo ? true : false;
-    } catch(err) {
+    } catch (err) {
       throw err;
     }
   }

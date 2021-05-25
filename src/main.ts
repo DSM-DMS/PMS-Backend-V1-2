@@ -16,7 +16,7 @@ async function createNestApplication() {
       transform: true,
     }),
   );
-  if(process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production") {
     app.enableCors({ origin: process.env.ALLOW_ORIGIN, credentials: true });
   } else {
     app.enableCors();
@@ -26,12 +26,16 @@ async function createNestApplication() {
 
 async function createSwaggerDocsConfig() {
   return new DocumentBuilder()
-  .setTitle("PMS")
-  .setDescription("PMS API V1")
-  .setVersion("1.0")
-  .setContact("jeongjiwoo0522", "https://github.com/jeongjiwoo0522", "jiwoourty@gmail.com")
-  .setLicense("Licenses", "https://www.dsm-pms.com")
-  .build();
+    .setTitle("PMS")
+    .setDescription("PMS API V1")
+    .setVersion("1.0")
+    .setContact(
+      "jeongjiwoo0522",
+      "https://github.com/jeongjiwoo0522",
+      "jiwoourty@gmail.com",
+    )
+    .setLicense("Licenses", "https://www.dsm-pms.com")
+    .build();
 }
 
 async function bootstrap() {
@@ -45,6 +49,6 @@ async function bootstrap() {
 
 bootstrap();
 
-process.on("uncaughtException", (err) => { 
-  console.error("uncaughtException (Node is alive)", err); 
+process.on("uncaughtException", (err) => {
+  console.error("uncaughtException (Node is alive)", err);
 });

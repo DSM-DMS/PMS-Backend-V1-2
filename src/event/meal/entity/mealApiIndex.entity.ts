@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 export class MealApiIndex {
   @PrimaryColumn()
   id: number;
-  
+
   @Column({ nullable: true })
   breakfast_api_index: number;
 
