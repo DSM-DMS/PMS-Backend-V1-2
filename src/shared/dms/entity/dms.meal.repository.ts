@@ -3,7 +3,7 @@ import { MealList } from "./dms.meal.entity";
 
 @EntityRepository(MealList)
 export class MealListRepository extends Repository<MealList> {
-  public findAll(date: string): Promise<MealList[]> {
+  public findAllByDate(date: string): Promise<MealList[]> {
     return this.createQueryBuilder("meal")
       .select("type")
       .addSelect("meal")

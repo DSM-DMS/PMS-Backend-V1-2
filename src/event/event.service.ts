@@ -6,12 +6,13 @@ import {
 import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
-import { MealListRepository } from "../shared/dms/dms.meal.repository";
+import { MealListRepository } from "../shared/dms/entity/dms.meal.repository";
 import { InjectRepository } from "@nestjs/typeorm";
-import { MealList } from "../shared/dms/dms.meal.entity";
+import { MealList } from "../shared/dms/entity/dms.meal.entity";
 import { MealResponse } from "./meal/dto/response/meal.response";
 import { UploadPictureRequest } from "./meal/dto/request/upload-picture.request";
 import { UploadPictureResponse } from "./meal/dto/response/upload-picture.response";
+import { DmsService } from "src/shared/dms/dms.service";
 
 const typeList: string[] = ["breakfast", "lunch", "dinner"];
 
@@ -22,7 +23,7 @@ export class EventService {
     private parentRepository: ParentRepository,
 
     @InjectRepository(MealListRepository, "dmsConnection")
-    private mealListRepository: MealListRepository,
+    private dmsMealService: DmsService,
   ) {}
 
   private subString(str: string): string {
@@ -75,7 +76,9 @@ export class EventService {
     datetime: string,
   ): Promise<Partial<MealResponse>> {
     const ymd: string = this.subString(datetime);
-    const mealLists: MealList[] = await this.mealListRepository.findAll(ymd);
+    const mealLists: MealList[] = await this.dmsMealService.findMealOnOneDay(
+      ymd,
+    );
     let mealResponseData: Partial<MealResponse> = {};
     typeList.forEach((type: string, index: number) => {
       mealResponseData[type] = mealLists[index]
