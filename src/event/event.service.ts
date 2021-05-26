@@ -74,14 +74,12 @@ export class EventService {
     };
   }
 
-  public async getMealListsOnTheDay(
-    datetime: string,
-  ): Promise<Partial<MealResponse>> {
+  public async getMealListsOnTheDay(datetime: string): Promise<MealResponse> {
     const ymd: string = this.subString(datetime);
     const mealLists: MealList[] = await this.dmsMealService.findMealOnOneDay(
       ymd,
     );
-    let mealResponseData: Partial<MealResponse> = {};
+    let mealResponseData: MealResponse = new MealResponse();
     this.typeList.forEach((type: string, index: number) => {
       mealResponseData[type] = mealLists[index]
         ? mealLists[index].meal.split("||")
