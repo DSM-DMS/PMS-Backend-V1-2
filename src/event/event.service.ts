@@ -1,20 +1,17 @@
 import {
   BadRequestException,
   ForbiddenException,
+  Inject,
   Injectable,
 } from "@nestjs/common";
 import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
-import { MealListRepository } from "../shared/dms/entity/dms.meal.repository";
-import { InjectRepository } from "@nestjs/typeorm";
-import { MealList } from "../shared/dms/entity/dms.meal.entity";
 import { MealResponse } from "./meal/dto/response/meal.response";
 import { UploadPictureRequest } from "./meal/dto/request/upload-picture.request";
 import { UploadPictureResponse } from "./meal/dto/response/upload-picture.response";
-import { DmsService } from "src/shared/dms/dms.service";
-
-const typeList: string[] = ["breakfast", "lunch", "dinner"];
+import { DmsService, MealList } from "../shared/dms/interface";
+import { DMS_SERVICE_TOKEN } from "../shared/dms/dms.module";
 
 @Injectable()
 export class EventService {
@@ -22,9 +19,11 @@ export class EventService {
     private mealRepository: MealRepository,
     private parentRepository: ParentRepository,
 
-    @InjectRepository(MealListRepository, "dmsConnection")
+    @Inject(DMS_SERVICE_TOKEN)
     private dmsMealService: DmsService,
   ) {}
+
+  private typeList: string[] = ["breakfast", "lunch", "dinner"];
 
   private subString(str: string): string {
     const year: string = str.substr(0, 4);
@@ -80,7 +79,7 @@ export class EventService {
       ymd,
     );
     let mealResponseData: Partial<MealResponse> = {};
-    typeList.forEach((type: string, index: number) => {
+    this.typeList.forEach((type: string, index: number) => {
       mealResponseData[type] = mealLists[index]
         ? mealLists[index].meal.split("||")
         : "";
