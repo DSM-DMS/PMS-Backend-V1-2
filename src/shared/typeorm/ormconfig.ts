@@ -2,7 +2,7 @@ import "dotenv/config";
 import { ConnectionOptions } from "typeorm";
 import { Meal } from "../../event/meal/entity/meal.entity";
 import { Parent } from "../parent/parent.entity";
-import { MealList } from "../dms/entity/dms.meal.entity";
+import { MealListEntity } from "../dms/entity/dms.meal.entity";
 import { User } from "../../introduce/club/user/user.entity";
 import { Club } from "../../introduce/club/entity/club.entity";
 import { ClubMember } from "../../introduce/club/entity/club.member.entity";
@@ -47,7 +47,7 @@ const connectionOptions: DBConnectionOptions = {
     synchronize: false,
     logging: false,
     name: "dmsConnection",
-    entities: [MealList],
+    entities: [MealListEntity],
   },
   ddyzd: {
     type: "mysql",

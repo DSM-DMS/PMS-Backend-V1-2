@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { MealList } from "./entity/dms.meal.entity";
 import { MealListRepository } from "./entity/dms.meal.repository";
+import { DmsService, MealList } from "./interface";
 
 @Injectable()
-export class DmsService {
+export class DmsServiceImpl implements DmsService {
   constructor(
     @InjectRepository(MealListRepository, "dmsConnection")
     private dmsMealRepository: MealListRepository,

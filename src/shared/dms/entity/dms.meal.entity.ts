@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
+import { MealList } from "../interface";
 
 @Entity("meal")
-export class MealList {
+export class MealListEntity implements MealList {
   @PrimaryColumn("date")
   date: Date;
 
