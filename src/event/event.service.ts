@@ -4,7 +4,6 @@ import {
   Inject,
   Injectable,
 } from "@nestjs/common";
-import { ParentRepository } from "../shared/parent/parent.repository";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
 import { MealResponse } from "./meal/dto/response/meal.response";
@@ -12,12 +11,16 @@ import { UploadPictureRequest } from "./meal/dto/request/upload-picture.request"
 import { UploadPictureResponse } from "./meal/dto/response/upload-picture.response";
 import { DmsService, MealList } from "../shared/dms/interface";
 import { DMS_SERVICE_TOKEN } from "../shared/dms/dms.module";
+import { ParentService } from "../shared/parent/interface";
+import { PARENT_SERVICE_TOKEN } from "../shared/parent/parent.module";
 
 @Injectable()
 export class EventService {
   constructor(
     private mealRepository: MealRepository,
-    private parentRepository: ParentRepository,
+
+    @Inject(PARENT_SERVICE_TOKEN)
+    private parentService: ParentService,
 
     @Inject(DMS_SERVICE_TOKEN)
     private dmsMealService: DmsService,
@@ -47,7 +50,7 @@ export class EventService {
     email: string,
     body: UploadPictureRequest,
   ): Promise<UploadPictureResponse> {
-    if (!(await this.parentRepository.checkAdminUserEmail(email))) {
+    if (!(await this.parentService.checkAdminUserEmail(email))) {
       throw new ForbiddenException("Fobidden user");
     }
     const meal: Meal = await this.mealRepository.getOrMakeOne(body.datetime);

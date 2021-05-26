@@ -1,4 +1,5 @@
-import { Parent } from "../../shared/parent/parent.entity";
+import { ParentEntity } from "../../shared/parent/entity/parent.entity";
+import { Parent } from "../../shared/parent/interface/entity/parent.entity.interface";
 import {
   Column,
   Entity,
@@ -20,7 +21,7 @@ export class Comment {
   @Column()
   body: string;
 
-  @ManyToOne((type) => Parent)
+  @ManyToOne((type) => ParentEntity)
   @JoinColumn({ name: "user_email" })
   user: Parent;
 

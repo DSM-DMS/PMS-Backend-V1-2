@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { MealRepository } from "./meal/entity/meal.repository";
 import { EventController } from "./event.controller";
 import { EventService } from "./event.service";
-import { ParentRepository } from "../shared/parent/parent.repository";
+import { ParentRepository } from "../shared/parent/entity/parent.repository";
 import { DmsModule } from "../shared/dms/dms.module";
 
 @Module({

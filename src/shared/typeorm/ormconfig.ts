@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { ConnectionOptions } from "typeorm";
 import { Meal } from "../../event/meal/entity/meal.entity";
-import { Parent } from "../parent/parent.entity";
+import { ParentEntity } from "../parent/entity/parent.entity";
 import { MealListEntity } from "../dms/entity/dms.meal.entity";
 import { User } from "../../introduce/club/user/user.entity";
 import { Club } from "../../introduce/club/entity/club.entity";
@@ -24,7 +24,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.DEVELOPMENT_DATABASE_NAME,
     synchronize: true,
     logging: true,
-    entities: [Meal, Parent, Notice, Comment, NoticeAttach],
+    entities: [Meal, ParentEntity, Notice, Comment, NoticeAttach],
   },
   production: {
     type: "postgres",
@@ -35,7 +35,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.PRODUCTION_DATABASE_NAME,
     synchronize: false,
     logging: true,
-    entities: [Meal, Parent, Notice, Comment, NoticeAttach],
+    entities: [Meal, ParentEntity, Notice, Comment, NoticeAttach],
   },
   dms: {
     type: "mysql",
