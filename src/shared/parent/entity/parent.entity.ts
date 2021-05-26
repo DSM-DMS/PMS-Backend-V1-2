@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Parent } from "../interface";
 
 @Entity("users")
-export class Parent {
+export class ParentEntity implements Parent {
   @PrimaryColumn()
   email: string;
 
