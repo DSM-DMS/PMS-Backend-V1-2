@@ -1,10 +1,18 @@
-import { Controller, Get, Param, UseGuards } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  UseGuards,
+} from "@nestjs/common";
 import {
   ApiTags,
   ApiBearerAuth,
   ApiHeader,
   ApiOperation,
   ApiResponse,
+  ApiQuery,
 } from "@nestjs/swagger";
 import { AuthGuard } from "../shared/authentication/auth.guard";
 import { NoticeInfoResponse } from "./dto/response/notice-info.response";
@@ -23,11 +31,12 @@ export class NoticeController {
     summary: "공지사항 목록 API",
     description: "성공 시 상태 코드 200 반환",
   })
+  @ApiQuery({ name: "page", type: Number })
   @ApiResponse({ status: 200, type: [NoticeListResponse] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeList() {
+  getNoticeList(@Query("page", new ParseIntPipe()) page: number) {
     return this.noticeService.getNoticeList();
   }
 
@@ -41,7 +50,7 @@ export class NoticeController {
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeInfo(@Param("notice_id") notice_id: number) {
+  getNoticeInfo(@Param("notice_id", new ParseIntPipe()) notice_id: number) {
     return this.noticeService.getNoticeInfo(notice_id);
   }
 }
