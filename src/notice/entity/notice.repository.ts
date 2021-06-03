@@ -13,9 +13,9 @@ export class NoticeRepository extends Repository<Notice> {
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
-      .offset(page*6)
+      .offset(page * 6)
       .limit(6)
-      .orderBy("notice.upload-date")
+      .orderBy("notice.upload-date", "DESC")
       .getMany();
   }
 
