@@ -37,7 +37,7 @@ export class NoticeController {
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
   getNoticeList(@Query("page", new ParseIntPipe()) page: number) {
-    return this.noticeService.getNoticeList();
+    return this.noticeService.getNoticeList(page);
   }
 
   @Get("/:notice_id")

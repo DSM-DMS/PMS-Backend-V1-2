@@ -13,8 +13,8 @@ export class NoticeService {
     private commentRepository: CommentRepository,
   ) {}
 
-  public getNoticeList(): Promise<NoticeListResponse[]> {
-    return this.noticeRepository.getNoticeList();
+  public getNoticeList(page: number): Promise<NoticeListResponse[]> {
+    return this.noticeRepository.getNoticeList(page);
   }
 
   public async getNoticeInfo(notice_id: number): Promise<NoticeInfoResponse> {

@@ -8,11 +8,14 @@ export class NoticeRepository extends Repository<Notice> {
     return getCustomRepository(NoticeRepository);
   }
 
-  public getNoticeList(): Promise<NoticeListResponse[]> {
+  public getNoticeList(page: number): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
+      .offset(page*6)
+      .limit(6)
+      .orderBy("notice.upload-date")
       .getMany();
   }
 
