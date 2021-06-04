@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { DataParser } from "../../shared/parser/parser.type";
 
 interface Schedule {
@@ -29,4 +30,12 @@ export abstract class AbstractCalendarDataFactory extends DataParser<any> {
 
   abstract setParsingData(): Promise<void>;
   abstract getParsingData(): Promise<Calendar>;
+}
+
+export class CalendarResponse {
+  @ApiProperty({
+    example:
+      "{ '1': { '20210102': ['이거', '저거', '그거'] }, '2': { ... } ... }",
+  })
+  value: Calendar;
 }
