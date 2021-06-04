@@ -13,12 +13,13 @@ export class NoticeService {
     private commentRepository: CommentRepository,
   ) {}
 
+  // 공지사항
   public getNoticeList(page: number): Promise<NoticeListResponse[]> {
-    return this.noticeRepository.getNoticeList(page);
+    return this.noticeRepository.findAllNotice(page);
   }
 
   public async getNoticeInfo(notice_id: number): Promise<NoticeInfoResponse> {
-    const notice: Notice = await this.noticeRepository.getNoticeInfo(notice_id);
+    const notice: Notice = await this.noticeRepository.findById(notice_id);
     await Promise.all(
       notice.comment.map((comment: Comment) => {
         return this.setLargeComments(comment);
@@ -30,13 +31,16 @@ export class NoticeService {
     };
   }
 
+  // 가정통신문
+  public getNoticeNewsList(page: number): Promise<NoticeListResponse[]> {
+    return this.noticeRepository.findAllNoticeNews(page);
+  }
+
   private async setLargeComments(comment: Comment) {
     const largeComments: Comment[] = await this.commentRepository.getLargeComment(
       comment.id,
     );
-    if (!largeComments) {
-      return;
-    } else {
+    if (largeComments) {
       comment.comment = largeComments;
       await Promise.all(
         comment.comment.map((comment: Comment) => {
