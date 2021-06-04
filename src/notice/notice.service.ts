@@ -25,10 +25,7 @@ export class NoticeService {
         return this.setLargeComments(comment);
       }),
     );
-    return {
-      ...notice,
-      attach: notice.attach.map((attach) => attach.file_name),
-    };
+    return notice;
   }
 
   // 가정통신문
