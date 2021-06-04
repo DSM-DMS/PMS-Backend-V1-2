@@ -16,6 +16,9 @@ export class Notice {
   @Column("text")
   body: string;
 
+  @Column()
+  type: "COMMON" | "NEWS"; // COMMON = 공지사항, NEWS = 가정통신문
+
   @OneToMany((type) => Comment, (comment) => comment.notice)
   comment: Comment[];
 

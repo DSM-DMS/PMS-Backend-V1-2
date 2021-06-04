@@ -8,18 +8,20 @@ export class NoticeRepository extends Repository<Notice> {
     return getCustomRepository(NoticeRepository);
   }
 
-  public getNoticeList(page: number): Promise<NoticeListResponse[]> {
+  // 공지사항
+  public findAllNotice(page: number): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .offset(page * 6)
       .limit(6)
+      .where("notice.type = 'COMMON'")
       .orderBy("notice.upload-date", "DESC")
       .getMany();
   }
 
-  public getNoticeInfo(notice_id: number): Promise<Notice> {
+  public findById(notice_id: number): Promise<Notice> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
@@ -37,5 +39,18 @@ export class NoticeRepository extends Repository<Notice> {
       .leftJoin("comment.user", "user")
       .where("notice.id = :id", { id: notice_id })
       .getOne();
+  }
+
+  // 가정통신문
+  public findAllNoticeNews(page: number): Promise<NoticeListResponse[]> {
+    return this.createQueryBuilder("notice")
+      .select("notice.id")
+      .addSelect("notice.upload-date")
+      .addSelect("notice.title")
+      .offset(page * 6)
+      .limit(6)
+      .where("notice.type = 'NEWS'")
+      .orderBy("notice.upload-date", "DESC")
+      .getMany();
   }
 }
