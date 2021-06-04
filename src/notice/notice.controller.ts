@@ -40,10 +40,24 @@ export class NoticeController {
     return this.noticeService.getNoticeList(page);
   }
 
+  @Get("/news")
+  @ApiOperation({
+    summary: "가정통신문 목록 API",
+    description: "성공 시 상태 코드 200 반환",
+  })
+  @ApiQuery({ name: "page", type: Number, required: true })
+  @ApiResponse({ status: 200, type: [NoticeListResponse] })
+  @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
+  @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
+  @ApiResponse({ status: 403, description: "접근 권한 없음" })
+  getNoticeNewsList(@Query("page", new ParseIntPipe()) page: number) {
+    return this.noticeService.getNoticeNewsList(page);
+  }
+
   @Get("/:notice_id")
   @UseGuards(new AuthGuard())
   @ApiOperation({
-    summary: "공지사항 정보 API",
+    summary: "공지사항, 가정통신문 정보 API",
     description: "성공 시 상태 코드 200 반환",
   })
   @ApiResponse({ status: 200, type: NoticeInfoResponse })
