@@ -15,6 +15,7 @@ export class CommentRepository extends Repository<Comment> {
       .leftJoin("comment.comment", "large_comment")
       .leftJoin("large_comment.user", "user")
       .where("comment.id = :id", { id: comment_id })
+      .orderBy("comment.upload-date")
       .getOne();
     return comment.comment;
   }
