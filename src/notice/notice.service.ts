@@ -28,6 +28,13 @@ export class NoticeService {
     return notice;
   }
 
+  public async getNoticeBySearch(
+    keyword: string,
+    page: number,
+  ): Promise<NoticeListResponse[]> {
+    return this.noticeRepository.findByKeyword(keyword, page);
+  }
+
   // 가정통신문
   public getNoticeNewsList(page: number): Promise<NoticeListResponse[]> {
     return this.noticeRepository.findAllNoticeNews(page);
