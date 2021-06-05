@@ -40,6 +40,25 @@ export class NoticeController {
     return this.noticeService.getNoticeList(page);
   }
 
+  @Get("/search")
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiQuery({ name: "page", type: Number, required: true })
+  @ApiResponse({ status: 200, type: [NoticeListResponse] })
+  @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
+  @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
+  @ApiResponse({ status: 403, description: "접근 권한 없음" })
+  getNoticeBySearch(
+    @Query("q") keyword: string,
+    @Query("page", new ParseIntPipe()) page: number,
+  ) {
+    return this.noticeService.getNoticeBySearch(keyword, page);
+  }
+
   @Get("/news")
   @ApiOperation({
     summary: "가정통신문 목록 API",
