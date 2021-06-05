@@ -40,6 +40,13 @@ export class NoticeService {
     return this.noticeRepository.findAllNoticeNews(page);
   }
 
+  public getNoticeNewsBySearch(
+    keyword: string,
+    page: number,
+  ): Promise<NoticeListResponse[]> {
+    return this.noticeRepository.findByNewsKeyword(keyword, page);
+  }
+
   private async setLargeComments(comment: Comment) {
     const largeComments: Comment[] = await this.commentRepository.getLargeComment(
       comment.id,

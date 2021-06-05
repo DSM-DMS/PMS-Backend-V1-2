@@ -70,4 +70,20 @@ export class NoticeRepository extends Repository<Notice> {
       .orderBy("notice.upload-date", "DESC")
       .getMany();
   }
+
+  public findByNewsKeyword(
+    keyword: string,
+    page: number,
+  ): Promise<NoticeListResponse[]> {
+    return this.createQueryBuilder("notice")
+      .select("notice.id")
+      .addSelect("notice.upload-date")
+      .addSelect("notice.title")
+      .offset(page * 6)
+      .limit(6)
+      .where("notice.type = 'NEWS'")
+      .andWhere(`notice.title like '%${keyword}%'`)
+      .orderBy("notice.upload-date", "DESC")
+      .getMany();
+  }
 }
