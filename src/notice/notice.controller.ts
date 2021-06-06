@@ -15,6 +15,7 @@ import {
   ApiQuery,
 } from "@nestjs/swagger";
 import { AuthGuard } from "../shared/authentication/auth.guard";
+import { NoticeCommentResponse } from "./dto/response/notice-comment.response";
 import { NoticeInfoResponse } from "./dto/response/notice-info.response";
 import { NoticeListResponse } from "./dto/response/notice-list.response";
 import { NoticeService } from "./notice.service";
@@ -112,5 +113,18 @@ export class NoticeController {
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
   getNoticeInfo(@Param("notice_id", new ParseIntPipe()) notice_id: number) {
     return this.noticeService.getNoticeInfo(notice_id);
+  }
+
+  @Get("/:comment_id/comment")
+  @ApiOperation({
+    summary: "가정통신문, 공지사항 대댓글 목록 API",
+    description: "성공 시 상태 코드 200 반환",
+  })
+  @ApiResponse({ status: 200, type: [NoticeCommentResponse] })
+  @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
+  @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
+  @ApiResponse({ status: 403, description: "접근 권한 없음" })
+  getLargeComment(@Param("comment_id", new ParseIntPipe()) comment_id: number) {
+    return this.noticeService.getLargeComment(comment_id);
   }
 }
