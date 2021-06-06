@@ -1,6 +1,7 @@
 import { ParentEntity } from "../../shared/parent/entity/parent.entity";
 import { Parent } from "../../shared/parent/interface/entity/parent.entity.interface";
 import {
+  BaseEntity,
   Column,
   Entity,
   JoinColumn,
@@ -11,11 +12,11 @@ import {
 import { Notice } from "../entity/notice.entity";
 
 @Entity("comment")
-export class Comment {
+export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "date" })
+  @Column()
   "upload-date": Date;
 
   @Column()
