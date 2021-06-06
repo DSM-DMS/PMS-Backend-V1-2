@@ -29,15 +29,7 @@ export class NoticeRepository extends Repository<Notice> {
       .addSelect("notice.body")
       .addSelect("attach.name")
       .addSelect("attach.download")
-      .addSelect("comment.id")
-      .addSelect("comment.upload-date")
-      .addSelect("comment.body")
-      .addSelect("user.email")
-      .addSelect("user.name")
-      .addSelect("user.user_role")
       .leftJoin("notice.attach", "attach")
-      .leftJoin("notice.comment", "comment")
-      .leftJoin("comment.user", "user")
       .where("notice.id = :id", { id: notice_id })
       .getOne();
   }
