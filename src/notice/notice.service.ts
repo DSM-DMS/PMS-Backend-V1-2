@@ -1,9 +1,11 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { NoticeRepository } from "./entity/notice.repository";
 import { Notice } from "./entity/notice.entity";
+import { Comment } from "./comment/comment.entity";
+import { NoticeRepository } from "./entity/notice.repository";
 import { CommentRepository } from "./comment/comment.repository";
 import { NoticeListResponse } from "./dto/response/notice-list.response";
 import { NoticeInfoResponse } from "./dto/response/notice-info.response";
+import { NoticeCommentResponse } from "./dto/response/notice-comment.response";
 
 @Injectable()
 export class NoticeService {
@@ -45,5 +47,15 @@ export class NoticeService {
     page: number,
   ): Promise<NoticeListResponse[]> {
     return this.noticeRepository.findByNewsKeyword(keyword, page);
+  }
+
+  public async getLargeComment(
+    comment_id: number,
+  ): Promise<NoticeCommentResponse[]> {
+    const comment: Comment = await this.commentRepository.findOne(comment_id);
+    if (!comment) {
+      throw new BadRequestException("Not Found Comment");
+    }
+    return this.commentRepository.findAllLargeComment(comment);
   }
 }
