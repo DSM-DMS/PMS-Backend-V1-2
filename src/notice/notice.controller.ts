@@ -30,7 +30,7 @@ export class NoticeController {
   @Get("/")
   @ApiOperation({
     summary: "공지사항 목록 API",
-    description: "성공 시 상태 코드 200 반환",
+    description: "공지사항 목록을 객체로 반환",
   })
   @ApiQuery({ name: "page", type: Number, required: true })
   @ApiResponse({ status: 200, type: [NoticeListResponse] })
@@ -42,9 +42,10 @@ export class NoticeController {
   }
 
   @Get("/search")
+  @UseGuards(new AuthGuard())
   @ApiOperation({
     summary: "공지사항 검색 API",
-    description: "성공 시 상태 코드 200 반환",
+    description: "해당하는 키워드의 공지사항 목록을 객체로 반환",
   })
   @ApiQuery({
     name: "q",
@@ -67,7 +68,7 @@ export class NoticeController {
   @Get("/news")
   @ApiOperation({
     summary: "가정통신문 목록 API",
-    description: "성공 시 상태 코드 200 반환",
+    description: "가정통신문 목록을 객체로 반환",
   })
   @ApiQuery({ name: "page", type: Number, required: true })
   @ApiResponse({ status: 200, type: [NoticeListResponse] })
@@ -79,9 +80,10 @@ export class NoticeController {
   }
 
   @Get("/news/search")
+  @UseGuards(new AuthGuard())
   @ApiOperation({
     summary: "가정통신문 검색 API",
-    description: "성공 시 상태 코드 200 반환",
+    description: "해당하는 키워드의 가정통신문 목록을 객체로 반환",
   })
   @ApiQuery({
     name: "q",
@@ -105,7 +107,7 @@ export class NoticeController {
   @UseGuards(new AuthGuard())
   @ApiOperation({
     summary: "공지사항, 가정통신문 정보 API",
-    description: "성공 시 상태 코드 200 반환",
+    description: "공지사항, 가정통신문의 정보와 최상위 댓글들을 객체로 반환",
   })
   @ApiResponse({ status: 200, type: NoticeInfoResponse })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
@@ -116,9 +118,10 @@ export class NoticeController {
   }
 
   @Get("/:comment_id/comment")
+  @UseGuards(new AuthGuard())
   @ApiOperation({
     summary: "가정통신문, 공지사항 대댓글 목록 API",
-    description: "성공 시 상태 코드 200 반환",
+    description: "댓글에 달린 대댓글 목록을 객체로 반환",
   })
   @ApiResponse({ status: 200, type: [NoticeCommentResponse] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
