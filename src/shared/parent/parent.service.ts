@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ParentEntity } from "./entity/parent.entity";
 import { ParentRepository } from "./entity/parent.repository";
-import { ParentService } from "./interface";
+import { Parent, ParentService } from "./interface";
 
 @Injectable()
 export class ParentServiceImpl implements ParentService {
@@ -16,5 +16,19 @@ export class ParentServiceImpl implements ParentService {
       throw new NotFoundException("Not found user");
     }
     return parent.user_role === "ADMIN";
+  }
+
+  public checkAdminUser(user: Parent): boolean {
+    return user.user_role === "ADMIN";
+  }
+
+  public findUser(email: string): Promise<Parent> {
+    return this.parentRepository
+      .createQueryBuilder("parent")
+      .select("parent.email")
+      .addSelect("parent.name")
+      .addSelect("parent.user_role")
+      .where("parent.email = :email", { email })
+      .getOne();
   }
 }
