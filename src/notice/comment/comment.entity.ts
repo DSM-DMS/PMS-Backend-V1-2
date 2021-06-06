@@ -21,6 +21,9 @@ export class Comment {
   @Column()
   body: string;
 
+  @Column()
+  depth: number;
+
   @ManyToOne((type) => ParentEntity)
   @JoinColumn({ name: "user_email" })
   user: Parent;
