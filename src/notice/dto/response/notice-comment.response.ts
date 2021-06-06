@@ -5,7 +5,7 @@ export class NoticeCommentResponse {
   @ApiProperty({ example: "123" })
   id: number;
 
-  @ApiProperty({ example: () => new Date() })
+  @ApiProperty({ example: () => new Date(), description: "UTC 기준" })
   "upload-date": Date;
 
   @ApiProperty({ example: "대댓글1" })
