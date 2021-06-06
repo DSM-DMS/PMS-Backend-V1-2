@@ -1,8 +1,10 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
   ParseIntPipe,
+  Post,
   Query,
   UseGuards,
 } from "@nestjs/common";
@@ -13,8 +15,11 @@ import {
   ApiOperation,
   ApiResponse,
   ApiQuery,
+  ApiBody,
 } from "@nestjs/swagger";
+import { Auth } from "../shared/authentication/auth.decorator";
 import { AuthGuard } from "../shared/authentication/auth.guard";
+import { NoticeCommentRequest } from "./dto/request/notice-comment.request";
 import { NoticeCommentResponse } from "./dto/response/notice-comment.response";
 import { NoticeInfoResponse } from "./dto/response/notice-info.response";
 import { NoticeListResponse } from "./dto/response/notice-list.response";
@@ -129,5 +134,27 @@ export class NoticeController {
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
   getLargeComment(@Param("comment_id", new ParseIntPipe()) comment_id: number) {
     return this.noticeService.getLargeComment(comment_id);
+  }
+
+  @Post("/:notice_id/comment")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "댓글 작성 API",
+    description: "성공 시 상태 코드 201 반환",
+  })
+  @ApiBody({ type: NoticeCommentRequest, required: true })
+  @ApiResponse({ status: 201 })
+  @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
+  @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
+  @ApiResponse({ status: 403, description: "접근 권한 없음" })
+  async addNoticeComment(
+    @Body() body: NoticeCommentRequest,
+    @Param("notice_id", new ParseIntPipe()) notice_id,
+    @Auth("email") email: string,
+  ) {
+    await this.noticeService.addNoticeComment(body, notice_id, email);
+    return {
+      message: "add comment success",
+    };
   }
 }
