@@ -38,12 +38,17 @@ export class NoticeController {
     description: "공지사항 목록을 객체로 반환",
   })
   @ApiQuery({ name: "page", type: Number, required: true })
+  @ApiQuery({ name: "size", type: Number, required: false })
+  @ApiResponse({ status: 200, type: [NoticeListResponse] })
   @ApiResponse({ status: 200, type: [NoticeListResponse] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeList(@Query("page", new ParseIntPipe()) page: number) {
-    return this.noticeService.getNoticeList(page);
+  getNoticeList(
+    @Query("page", new ParseIntPipe()) page: number,
+    @Query("size") size: number
+  ) {
+    return this.noticeService.getNoticeList(page, size || 6);
   }
 
   @Get("/search")
@@ -76,12 +81,16 @@ export class NoticeController {
     description: "가정통신문 목록을 객체로 반환",
   })
   @ApiQuery({ name: "page", type: Number, required: true })
+  @ApiQuery({ name: "size", type: Number, required: false })
   @ApiResponse({ status: 200, type: [NoticeListResponse] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeNewsList(@Query("page", new ParseIntPipe()) page: number) {
-    return this.noticeService.getNoticeNewsList(page);
+  getNoticeNewsList(
+    @Query("page", new ParseIntPipe()) page: number,
+    @Query("size") size: number
+  ) {
+    return this.noticeService.getNoticeNewsList(page, size || 6);
   }
 
   @Get("/news/search")

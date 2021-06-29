@@ -9,13 +9,13 @@ export class NoticeRepository extends Repository<Notice> {
   }
 
   // 공지사항
-  public findAllNotice(page: number): Promise<NoticeListResponse[]> {
+  public findAllNotice(page: number, size: number): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .offset(page * 6)
-      .limit(6)
+      .limit(size)
       .where("notice.type = 'COMMON'")
       .orderBy("notice.upload-date", "DESC")
       .getMany();
@@ -51,13 +51,13 @@ export class NoticeRepository extends Repository<Notice> {
   }
 
   // 가정통신문
-  public findAllNoticeNews(page: number): Promise<NoticeListResponse[]> {
+  public findAllNoticeNews(page: number, size: number): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .offset(page * 6)
-      .limit(6)
+      .limit(size)
       .where("notice.type = 'NEWS'")
       .orderBy("notice.upload-date", "DESC")
       .getMany();

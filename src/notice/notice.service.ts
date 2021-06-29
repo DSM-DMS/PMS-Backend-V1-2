@@ -25,8 +25,8 @@ export class NoticeService {
   ) {}
 
   // 공지사항
-  public getNoticeList(page: number): Promise<NoticeListResponse[]> {
-    return this.noticeRepository.findAllNotice(page);
+  public getNoticeList(page: number, size: number): Promise<NoticeListResponse[]> {
+    return this.noticeRepository.findAllNotice(page, size);
   }
 
   public async getNoticeInfo(notice_id: number): Promise<NoticeInfoResponse> {
@@ -48,8 +48,8 @@ export class NoticeService {
   }
 
   // 가정통신문
-  public getNoticeNewsList(page: number): Promise<NoticeListResponse[]> {
-    return this.noticeRepository.findAllNoticeNews(page);
+  public getNoticeNewsList(page: number, size: number): Promise<NoticeListResponse[]> {
+    return this.noticeRepository.findAllNoticeNews(page, size);
   }
 
   public getNoticeNewsBySearch(
