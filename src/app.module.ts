@@ -7,6 +7,7 @@ import { CalendarModule } from "./calendar/calendar.module";
 import { NoticeModule } from "./notice/notice.module";
 import { IntroduceModule } from "./introduce/introduce.module";
 import { TypeOrmConfigModule } from "./shared/typeorm/typeorm-config.module";
+import { GalleryModule } from "./gallery/gallery.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TypeOrmConfigModule } from "./shared/typeorm/typeorm-config.module";
     CalendarModule,
     NoticeModule,
     IntroduceModule,
+    GalleryModule,
   ],
   providers: [
     {

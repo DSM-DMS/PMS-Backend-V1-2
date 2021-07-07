@@ -9,6 +9,7 @@ import { ClubMember } from "../../introduce/club/entity/club.member.entity";
 import { Notice } from "../../notice/entity/notice.entity";
 import { Comment } from "../../notice/comment/comment.entity";
 import { NoticeAttach } from "../../notice/entity/notice-attach.entity";
+import { Gallery } from "../../gallery/entity/gallery.entity";
 
 interface DBConnectionOptions {
   [env: string]: ConnectionOptions;
@@ -24,7 +25,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.DEVELOPMENT_DATABASE_NAME,
     synchronize: true,
     logging: true,
-    entities: [Meal, ParentEntity, Notice, Comment, NoticeAttach],
+    entities: [Meal, ParentEntity, Notice, Comment, NoticeAttach, Gallery],
   },
   production: {
     type: "postgres",
@@ -35,7 +36,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.PRODUCTION_DATABASE_NAME,
     synchronize: false,
     logging: true,
-    entities: [Meal, ParentEntity, Notice, Comment, NoticeAttach],
+    entities: [Meal, ParentEntity, Notice, Comment, NoticeAttach, Gallery],
   },
   dms: {
     type: "mysql",
