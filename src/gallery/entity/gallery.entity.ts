@@ -17,4 +17,6 @@ export class Gallery {
 
   @OneToMany((type) => GalleryAttach, (attach) => attach.gallery)
   attach: GalleryAttach[];
+
+  thumbnail: GalleryAttach;
 }
