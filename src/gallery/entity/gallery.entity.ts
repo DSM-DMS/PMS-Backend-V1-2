@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { GalleryAttach } from "./gallery-attach.entity";
 
 @Entity("gallery")
 export class Gallery {
@@ -13,4 +14,7 @@ export class Gallery {
 
   @Column("text")
   body: string;
+
+  @OneToMany((type) => GalleryAttach, (attach) => attach.gallery)
+  attach: GalleryAttach[];
 }
