@@ -14,11 +14,8 @@ export class GalleryService {
     if (!size) {
       throw new BadRequestException("Invalid Parameter");
     }
-    const galleries: Gallery[] = await this.galleryRepository.findWithPageAndSize(
-      page,
-      size,
-    );
-    return galleries.map((gallery) => ({
+    const galleries: Gallery[] = await this.galleryRepository.findWithPageAndSize();
+    return galleries.splice(page*4, size).map((gallery: Gallery) => ({
       ...gallery,
       thumbnail: gallery.thumbnail.file_name,
     }));
