@@ -10,7 +10,7 @@ import { Gallery } from "./gallery.entity";
 @Entity("gallery_attach")
 export class GalleryAttach {
   @PrimaryGeneratedColumn()
-  id: number;
+  attach_id: number;
 
   @Column()
   file_name: string;
