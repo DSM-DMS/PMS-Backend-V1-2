@@ -46,7 +46,7 @@ export class NoticeController {
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
   getNoticeList(
     @Query("page", new ParseIntPipe()) page: number,
-    @Query("size") size: number
+    @Query("size") size: number,
   ) {
     return this.noticeService.getNoticeList(page, size || 6);
   }
@@ -88,7 +88,7 @@ export class NoticeController {
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
   getNoticeNewsList(
     @Query("page", new ParseIntPipe()) page: number,
-    @Query("size") size: number
+    @Query("size") size: number,
   ) {
     return this.noticeService.getNoticeNewsList(page, size || 6);
   }

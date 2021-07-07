@@ -25,7 +25,10 @@ export class NoticeService {
   ) {}
 
   // 공지사항
-  public getNoticeList(page: number, size: number): Promise<NoticeListResponse[]> {
+  public getNoticeList(
+    page: number,
+    size: number,
+  ): Promise<NoticeListResponse[]> {
     return this.noticeRepository.findAllNotice(page, size);
   }
 
@@ -48,7 +51,10 @@ export class NoticeService {
   }
 
   // 가정통신문
-  public getNoticeNewsList(page: number, size: number): Promise<NoticeListResponse[]> {
+  public getNoticeNewsList(
+    page: number,
+    size: number,
+  ): Promise<NoticeListResponse[]> {
     return this.noticeRepository.findAllNoticeNews(page, size);
   }
 

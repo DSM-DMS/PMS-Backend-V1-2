@@ -1,9 +1,18 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Notice } from "./notice.entity";
 
 @Entity("notice_attach")
 export class NoticeAttach {
-  @PrimaryColumn({ type: "varchar", length: 512, name: "file_name" })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ type: "varchar", length: 512, name: "file_name" })
   download: string;
 
   @Column({ name: "attach_name" })

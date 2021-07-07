@@ -9,7 +9,10 @@ export class NoticeRepository extends Repository<Notice> {
   }
 
   // 공지사항
-  public findAllNotice(page: number, size: number): Promise<NoticeListResponse[]> {
+  public findAllNotice(
+    page: number,
+    size: number,
+  ): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
@@ -51,7 +54,10 @@ export class NoticeRepository extends Repository<Notice> {
   }
 
   // 가정통신문
-  public findAllNoticeNews(page: number, size: number): Promise<NoticeListResponse[]> {
+  public findAllNoticeNews(
+    page: number,
+    size: number,
+  ): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
