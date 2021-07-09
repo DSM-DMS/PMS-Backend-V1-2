@@ -1,5 +1,19 @@
-import { ParseIntPipe, Query, Controller, Get } from "@nestjs/common";
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import {
+  ParseIntPipe,
+  Query,
+  Controller,
+  Get,
+  Param,
+  BadRequestException,
+} from "@nestjs/common";
+import {
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
+import { GalleryInfo } from "./dto/response/gallery-info.response";
 import { GalleryList } from "./dto/response/gallery-list.response";
 import { GalleryService } from "./gallery.service";
 
@@ -22,5 +36,25 @@ export class GalleryController {
     @Query("size", new ParseIntPipe()) size: number,
   ) {
     return this.galleryService.getGalleryList(page, size);
+  }
+
+  @Get("/:gallery_id")
+  @ApiOperation({
+    summary: "앨범 정보 API",
+    description: "사진앨범 정보를 객체로 반환",
+  })
+  @ApiParam({ name: "gallery_id", required: true, type: Number })
+  @ApiResponse({ status: 200, type: GalleryInfo })
+  @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
+  public getGalleryInfo(
+    @Param(
+      "gallery_id",
+      new ParseIntPipe({
+        exceptionFactory: () => new BadRequestException("invalid"),
+      }),
+    )
+    gallery_id: number,
+  ) {
+    return this.galleryService.getGalleryInfo(gallery_id);
   }
 }
