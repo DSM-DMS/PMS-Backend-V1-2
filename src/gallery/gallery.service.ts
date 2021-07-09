@@ -5,19 +5,28 @@ import { GalleryRepository } from "./entity/gallery.repository";
 
 @Injectable()
 export class GalleryService {
-  constructor(private galleryRepository: GalleryRepository) {}
+  constructor(private galleryRepository: GalleryRepository) {
+    galleryRepository.find().then((g) => {
+      this.galleryTotalLength = g.length;
+    });
+  }
+
+  private galleryTotalLength: number;
 
   public async getGalleryList(
     page: number,
     size: number,
-  ): Promise<GalleryListResponse[]> {
-    if (!size) {
+  ): Promise<GalleryListResponse> {
+    if (!size || size > this.galleryTotalLength) {
       throw new BadRequestException("Invalid Parameter");
     }
     const galleries: Gallery[] = await this.galleryRepository.findWithPageAndSize();
-    return galleries.splice(page*4, size).map((gallery: Gallery) => ({
-      ...gallery,
-      thumbnail: gallery.thumbnail.file_name,
-    }));
+    return {
+      galleries: galleries.splice(page * 4, size).map((gallery: Gallery) => ({
+        ...gallery,
+        thumbnail: gallery.thumbnail.file_name,
+      })),
+      totalLength: this.galleryTotalLength,
+    };
   }
 }

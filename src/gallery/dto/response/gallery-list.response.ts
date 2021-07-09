@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class GalleryListResponse {
+export class GalleryList {
   @ApiProperty({ example: "gallery-id" })
   id: number;
 
@@ -15,4 +15,9 @@ export class GalleryListResponse {
     description: "gallery 섬네일",
   })
   thumbnail: string;
+}
+
+export class GalleryListResponse {
+  galleries: GalleryList[];
+  totalLength: number;
 }

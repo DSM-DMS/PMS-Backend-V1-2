@@ -1,6 +1,6 @@
 import { ParseIntPipe, Query, Controller, Get } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { GalleryListResponse } from "./dto/response/gallery-list.response";
+import { GalleryList } from "./dto/response/gallery-list.response";
 import { GalleryService } from "./gallery.service";
 
 @ApiTags("gallery")
@@ -15,7 +15,7 @@ export class GalleryController {
   })
   @ApiQuery({ name: "page", type: Number, required: true })
   @ApiQuery({ name: "size", type: Number, required: true })
-  @ApiResponse({ status: 200, type: [GalleryListResponse] })
+  @ApiResponse({ status: 200, type: GalleryList })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   public getGalleryList(
     @Query("page", new ParseIntPipe()) page: number,
