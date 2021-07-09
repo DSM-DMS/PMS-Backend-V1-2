@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class GalleryInfoResponse {
+export class GalleryInfo {
   @ApiProperty({ example: "gallery-id" })
   id: number;
 
@@ -22,4 +22,14 @@ export class GalleryInfoResponse {
     type: [String],
   })
   attach: string[];
+
+  @ApiProperty({
+    example: "https://dsmhs.djsch.kr/boardCnts/fileDown",
+    description: "gallery 섬네일",
+  })
+  thumbnail: string;
+}
+
+export class GalleryInfoResponse {
+  gallery: GalleryInfo;
 }
