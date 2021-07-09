@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
+import { GalleryInfoResponse } from "./dto/response/gallery-info.response";
 import { GalleryListResponse } from "./dto/response/gallery-list.response";
 import { Gallery } from "./entity/gallery.entity";
 import { GalleryRepository } from "./entity/gallery.repository";
@@ -27,6 +28,22 @@ export class GalleryService {
         thumbnail: gallery.thumbnail.file_name,
       })),
       totalLength: this.galleryTotalLength,
+    };
+  }
+
+  public async getGalleryInfo(
+    gallery_id: number,
+  ): Promise<GalleryInfoResponse> {
+    const gallery: Gallery = await this.galleryRepository.findById(gallery_id);
+    if (!gallery) {
+      throw new BadRequestException("Invalid Parameter");
+    }
+    return {
+      gallery: {
+        ...gallery,
+        attach: gallery.attach.map((a) => a.file_name),
+        thumbnail: gallery.thumbnail.file_name,
+      },
     };
   }
 }
