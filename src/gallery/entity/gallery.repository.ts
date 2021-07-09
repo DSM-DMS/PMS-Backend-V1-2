@@ -3,7 +3,7 @@ import { Gallery } from "./gallery.entity";
 
 @EntityRepository(Gallery)
 export class GalleryRepository extends Repository<Gallery> {
-  public findWithPageAndSize() {
+  public findWithPageAndSize(): Promise<Gallery[]> {
     return this.createQueryBuilder("gallery")
       .select("gallery.id")
       .addSelect("gallery.upload-date")
@@ -11,5 +11,17 @@ export class GalleryRepository extends Repository<Gallery> {
       .leftJoinAndMapOne("gallery.thumbnail", "gallery.attach", "attach")
       .orderBy("gallery.upload-date", "DESC")
       .getMany();
+  }
+
+  public findById(gallery_id: number): Promise<Gallery> {
+    return this.createQueryBuilder("gallery")
+      .leftJoinAndSelect("gallery.attach", "attach_as_files")
+      .leftJoinAndMapOne(
+        "gallery.thumbnail",
+        "gallery.attach",
+        "attach_as_thumbnail",
+      )
+      .where("gallery.id = :id", { id: gallery_id })
+      .getOne();
   }
 }
