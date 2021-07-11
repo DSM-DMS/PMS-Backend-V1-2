@@ -10,7 +10,7 @@ import { Notice } from "./notice.entity";
 @Entity("notice_attach")
 export class NoticeAttach {
   @PrimaryGeneratedColumn()
-  id: number;
+  attach_id: number;
 
   @Column({ type: "varchar", length: 512, name: "file_name" })
   download: string;
