@@ -36,9 +36,8 @@ export class EventService {
   }
 
   public async getPicturesOnTheDay(datetime: string): Promise<MealResponse> {
-    const response: MealResponse = await this.mealRepository.getOneByDatetimeWithPicture(
-      datetime,
-    );
+    const response: MealResponse =
+      await this.mealRepository.getOneByDatetimeWithPicture(datetime);
     if (!response) {
       throw new BadRequestException("Not found meal data");
     }

@@ -17,6 +17,9 @@ export class Notice {
   body: string;
 
   @Column()
+  writer: string;
+
+  @Column()
   type: "COMMON" | "NEWS"; // COMMON = 공지사항, NEWS = 가정통신문
 
   @OneToMany((type) => Comment, (comment) => comment.notice)

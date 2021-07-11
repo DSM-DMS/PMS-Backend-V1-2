@@ -15,6 +15,9 @@ export class NoticeInfoResponse {
   @ApiProperty({ example: "2학기 시간표입니다." })
   body: string;
 
+  @ApiProperty({ example: "신**" })
+  writer: string;
+
   @ApiProperty({
     example:
       "[{ download: https://example.com/helloworld, name: 2학기 가정통신문.hwp }]",

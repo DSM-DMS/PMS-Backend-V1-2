@@ -80,9 +80,8 @@ export class NoticeService {
     notice_id: number,
     email: string,
   ): Promise<Comment> {
-    const findNoticePromise: Promise<Notice> = this.noticeRepository.findOne(
-      notice_id,
-    );
+    const findNoticePromise: Promise<Notice> =
+      this.noticeRepository.findOne(notice_id);
     const findUserPromise: Promise<Parent> = this.userService.findUser(email);
     const notice: Notice = await findNoticePromise;
     const user: Parent = await findUserPromise;

@@ -9,4 +9,7 @@ export class NoticeListResponse {
 
   @ApiProperty({ example: "2020학년도 2학기 시간표 안내" })
   title: string;
+
+  @ApiProperty({ example: "신**" })
+  writer: string;
 }
