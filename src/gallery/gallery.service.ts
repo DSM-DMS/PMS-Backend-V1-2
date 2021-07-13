@@ -42,7 +42,7 @@ export class GalleryService {
         .splice(page * size, size)
         .map((gallery: Gallery) => ({
           ...gallery,
-          thumbnail: gallery.thumbnail.file_name,
+          thumbnail: gallery.thumbnail && gallery.thumbnail.file_name,
         })),
       totalLength: this.galleryTotalLength,
     };

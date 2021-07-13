@@ -45,7 +45,6 @@ export abstract class ImageUploader {
     const filename: string = await promisify(this.findLocalFileName).bind(
       this,
     )();
-    console.log(filename);
     const fileLocation: string = await promisify(this.saveLocalFile).bind(this)(
       filename,
     );
