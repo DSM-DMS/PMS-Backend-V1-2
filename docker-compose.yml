@@ -1,8 +1,11 @@
 version: '3'
 
 services:
+  env_file: .env
   application:
     image: node/dms-pms:0.0.1.RELEASE
     build: .
     ports:
       - 3000:3000
+    volumes: 
+      - ${TASTATIC_FILE_PATHG}:${STATIC_FILE_PATH}
