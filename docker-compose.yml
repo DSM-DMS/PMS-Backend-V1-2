@@ -8,4 +8,4 @@ services:
     ports:
       - 3000:3000
     volumes: 
-      - ${TASTATIC_FILE_PATHG}:${STATIC_FILE_PATH}
+      - ${STATIC_FILE_PATH}:${STATIC_FILE_PATH}
