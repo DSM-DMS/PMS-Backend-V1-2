@@ -31,7 +31,7 @@ export abstract class ImageUploader {
   ) {
     const filePath: string = this.findDsmKrFilePath();
     request(filePath, { headers: { "user-agent": "" } })
-      .pipe(fs.createWriteStream(`${process.env.STATIC_FILE_PATH}/${filename}`))
+      .pipe(fs.createWriteStream(`/static/file/${filename}`))
       .on("error", (writeError: Error) => callback(writeError, null))
       .on("close", () =>
         callback(

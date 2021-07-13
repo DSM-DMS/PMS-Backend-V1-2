@@ -9,4 +9,4 @@ services:
     env_file:
       - .env
     volumes: 
-      - ${STATIC_FILE_PATH}:${STATIC_FILE_PATH}
+      - ${STATIC_FILE_PATH}:/static/file
