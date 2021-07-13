@@ -24,7 +24,7 @@ export class GalleryService {
     const galleries: Gallery[] =
       await this.galleryRepository.findWithPageAndSize();
     return {
-      galleries: galleries.splice(page * 4, size).map((gallery: Gallery) => ({
+      galleries: galleries.splice(page * size, size).map((gallery: Gallery) => ({
         ...gallery,
         thumbnail: gallery.thumbnail.file_name,
       })),
