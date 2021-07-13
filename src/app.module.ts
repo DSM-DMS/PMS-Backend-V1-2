@@ -8,6 +8,7 @@ import { NoticeModule } from "./notice/notice.module";
 import { IntroduceModule } from "./introduce/introduce.module";
 import { TypeOrmConfigModule } from "./shared/typeorm/typeorm-config.module";
 import { GalleryModule } from "./gallery/gallery.module";
+import { ImageModule } from "./shared/image/image.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { GalleryModule } from "./gallery/gallery.module";
     NoticeModule,
     IntroduceModule,
     GalleryModule,
+    ImageModule,
   ],
   providers: [
     {
