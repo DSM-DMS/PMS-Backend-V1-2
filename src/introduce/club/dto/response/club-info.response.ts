@@ -5,7 +5,7 @@ export class ClubInfoResponse {
   title: string;
 
   @ApiProperty({ example: "https://www.dsm-dms.com/example.jpg" })
-  uri: string;
+  url: string;
 
   @ApiProperty({ example: "기숙사 지원 시스템 개발동아리" })
   explanation: string;

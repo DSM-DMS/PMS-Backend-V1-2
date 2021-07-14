@@ -10,7 +10,7 @@ export class Club {
   title: string;
 
   @Column({ name: "profile_image" })
-  uri: string;
+  url: string;
 
   @Column({ name: "description" })
   explanation: string;

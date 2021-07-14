@@ -7,7 +7,7 @@ export class ClubRepository extends Repository<Club> {
   public getClubInfo(name: string): Promise<Club> {
     return this.createQueryBuilder("club")
       .select("club.title", "title")
-      .addSelect(`CONCAT('${process.env.DDYZD_URL}/file/', club.uri)`, "uri")
+      .addSelect(`CONCAT('${process.env.DDYZD_URL}/file/', club.url)`, "url")
       .addSelect("club.explanation", "explanation")
       .where("club.title = :name", { name })
       .getRawOne();
@@ -30,7 +30,7 @@ export class ClubRepository extends Repository<Club> {
       .select("club.title", "club-name")
       .addSelect("club.explanation", "explanation")
       .addSelect(
-        `CONCAT('${process.env.DDYZD_URL}/file/', club.uri)`,
+        `CONCAT('${process.env.DDYZD_URL}/file/', club.url)`,
         "picture-uri",
       )
       .getRawMany();
