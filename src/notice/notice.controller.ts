@@ -63,16 +63,12 @@ export class NoticeController {
     required: true,
     description: "검색할 키워드",
   })
-  @ApiQuery({ name: "page", type: Number, required: true })
   @ApiResponse({ status: 200, type: [NoticeListResponse] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeBySearch(
-    @Query("q") keyword: string,
-    @Query("page", new ParseIntPipe()) page: number,
-  ) {
-    return this.noticeService.getNoticeBySearch(keyword, page);
+  getNoticeBySearch(@Query("q") keyword: string) {
+    return this.noticeService.getNoticeBySearch(keyword);
   }
 
   @Get("/news")
@@ -105,16 +101,12 @@ export class NoticeController {
     required: true,
     description: "검색할 키워드",
   })
-  @ApiQuery({ name: "page", type: Number, required: true })
   @ApiResponse({ status: 200, type: [NoticeListResponse] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeNewsBySearch(
-    @Query("q") keyword: string,
-    @Query("page", new ParseIntPipe()) page: number,
-  ) {
-    return this.noticeService.getNoticeNewsBySearch(keyword, page);
+  getNoticeNewsBySearch(@Query("q") keyword: string) {
+    return this.noticeService.getNoticeNewsBySearch(keyword);
   }
 
   @Get("/:notice_id")
