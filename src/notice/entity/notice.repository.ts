@@ -39,17 +39,12 @@ export class NoticeRepository extends Repository<Notice> {
       .getOne();
   }
 
-  public findByKeyword(
-    keyword: string,
-    page: number,
-  ): Promise<NoticeListResponse[]> {
+  public findByKeyword(keyword: string): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .addSelect("notice.writer")
-      .offset(page * 6)
-      .limit(6)
       .where("notice.type = 'COMMON'")
       .andWhere(`notice.title like '%${keyword}%'`)
       .orderBy("notice.upload-date", "DESC")
@@ -73,17 +68,12 @@ export class NoticeRepository extends Repository<Notice> {
       .getMany();
   }
 
-  public findByNewsKeyword(
-    keyword: string,
-    page: number,
-  ): Promise<NoticeListResponse[]> {
+  public findByNewsKeyword(keyword: string): Promise<NoticeListResponse[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .addSelect("notice.writer")
-      .offset(page * 6)
-      .limit(6)
       .where("notice.type = 'NEWS'")
       .andWhere(`notice.title like '%${keyword}%'`)
       .orderBy("notice.upload-date", "DESC")
