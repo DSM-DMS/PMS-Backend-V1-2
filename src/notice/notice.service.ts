@@ -46,6 +46,9 @@ export class NoticeService {
   public async getNoticeBySearch(
     keyword: string,
   ): Promise<NoticeListResponse[]> {
+    if (!keyword) {
+      throw new BadRequestException("Invalid Parameter");
+    }
     return this.noticeRepository.findByKeyword(keyword);
   }
 
@@ -58,6 +61,9 @@ export class NoticeService {
   }
 
   public getNoticeNewsBySearch(keyword: string): Promise<NoticeListResponse[]> {
+    if (!keyword) {
+      throw new BadRequestException("Invalid Parameter");
+    }
     return this.noticeRepository.findByNewsKeyword(keyword);
   }
 
