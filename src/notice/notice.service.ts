@@ -45,9 +45,8 @@ export class NoticeService {
 
   public async getNoticeBySearch(
     keyword: string,
-    page: number,
   ): Promise<NoticeListResponse[]> {
-    return this.noticeRepository.findByKeyword(keyword, page);
+    return this.noticeRepository.findByKeyword(keyword);
   }
 
   // 가정통신문
@@ -58,11 +57,8 @@ export class NoticeService {
     return this.noticeRepository.findAllNoticeNews(page, size);
   }
 
-  public getNoticeNewsBySearch(
-    keyword: string,
-    page: number,
-  ): Promise<NoticeListResponse[]> {
-    return this.noticeRepository.findByNewsKeyword(keyword, page);
+  public getNoticeNewsBySearch(keyword: string): Promise<NoticeListResponse[]> {
+    return this.noticeRepository.findByNewsKeyword(keyword);
   }
 
   public async getLargeComment(
@@ -89,9 +85,6 @@ export class NoticeService {
     if (!notice) {
       throw new BadRequestException("Not Found Notice");
     }
-    if (this.userService.checkAdminUser(user)) {
-      throw new ForbiddenException("Fobidden user");
-    }
     if (body.comment_id) {
       const exComment: Comment = await this.commentRepository.findOne(
         body.comment_id,
@@ -101,12 +94,14 @@ export class NoticeService {
       }
       parent_comment = exComment;
     }
-    const comment: Comment = new Comment();
-    comment.user = user;
-    comment.notice = notice;
-    comment.body = body.body;
-    comment.parent_comment = parent_comment;
-    comment.depth = parent_comment ? parent_comment.depth + 1 : 0;
-    return comment.save();
+    return this.commentRepository
+      .create({
+        user,
+        notice,
+        body: body.body,
+        parent_comment,
+        depth: parent_comment ? parent_comment.depth + 1 : 0,
+      })
+      .save();
   }
 }
