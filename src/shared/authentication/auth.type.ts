@@ -1,7 +1,11 @@
 import { Request } from "express";
 
 export interface TokenPayload {
-  email: string;
+  iat: number;
+  sub: string;
+  exp: number;
+  type: string;
+  role: string;
 }
 
 export interface AuthGuardRequest extends Request {
