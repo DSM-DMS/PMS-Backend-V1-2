@@ -151,7 +151,7 @@ export class NoticeController {
   async addNoticeComment(
     @Body() body: NoticeCommentRequest,
     @Param("notice_id", new ParseIntPipe()) notice_id,
-    @Auth("email") email: string,
+    @Auth("sub") email: string,
   ) {
     await this.noticeService.addNoticeComment(body, notice_id, email);
     return {
