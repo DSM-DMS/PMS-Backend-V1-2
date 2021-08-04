@@ -62,7 +62,7 @@ export class EventController {
   @ApiBody({ type: UploadPictureRequest })
   uploadMealPicture(
     @UploadedFile() file: Express.Multer.File,
-    @Auth("email") email: string,
+    @Auth("sub") email: string,
     @Body() body: UploadPictureRequest,
   ): Promise<UploadPictureResponse> {
     return this.eventService.setPictureOnTheDay(file, email, body);
