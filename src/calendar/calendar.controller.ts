@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
 import {
   ApiTags,
   ApiResponse,
@@ -19,9 +19,8 @@ export class CalendarController {
     description: "학교 일정 목록을 리스트로 반환",
   })
   @ApiResponse({ status: 200, type: CalendarResponse })
-  @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiConsumes("application/json")
-  getCalendar() {
+  public getCalendar() {
     return this.calendarService.getCalendar();
   }
 }
