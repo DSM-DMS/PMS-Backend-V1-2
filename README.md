@@ -1,6 +1,6 @@
 # PMS-Backend-V1-2
 
-![pms](http://api.potatochips.live/media/pms/)
+![pms](http://211.38.86.92/media/pms/static/pms.png)
 
 
 
