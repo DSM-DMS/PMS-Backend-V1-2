@@ -22,7 +22,7 @@ import { AuthGuard } from "../shared/authentication/auth.guard";
 import { NoticeCommentRequest } from "./dto/request/notice-comment.request";
 import { NoticeCommentResponse } from "./dto/response/notice-comment.response";
 import { NoticeInfoResponse } from "./dto/response/notice-info.response";
-import { NoticeListResponse } from "./dto/response/notice-list.response";
+import { NoticeList } from "./dto/response/notice-list.response";
 import { NoticeService } from "./notice.service";
 
 @ApiTags("notice")
@@ -39,8 +39,7 @@ export class NoticeController {
   })
   @ApiQuery({ name: "page", type: Number, required: true })
   @ApiQuery({ name: "size", type: Number, required: false })
-  @ApiResponse({ status: 200, type: [NoticeListResponse] })
-  @ApiResponse({ status: 200, type: [NoticeListResponse] })
+  @ApiResponse({ status: 200, type: [NoticeList] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
@@ -63,7 +62,7 @@ export class NoticeController {
     required: true,
     description: "검색할 키워드",
   })
-  @ApiResponse({ status: 200, type: [NoticeListResponse] })
+  @ApiResponse({ status: 200, type: [NoticeList] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
@@ -78,7 +77,7 @@ export class NoticeController {
   })
   @ApiQuery({ name: "page", type: Number, required: true })
   @ApiQuery({ name: "size", type: Number, required: false })
-  @ApiResponse({ status: 200, type: [NoticeListResponse] })
+  @ApiResponse({ status: 200, type: [NoticeList] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
@@ -101,7 +100,7 @@ export class NoticeController {
     required: true,
     description: "검색할 키워드",
   })
-  @ApiResponse({ status: 200, type: [NoticeListResponse] })
+  @ApiResponse({ status: 200, type: [NoticeList] })
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
