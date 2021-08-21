@@ -2,8 +2,7 @@ version: '3'
 
 services:
   application:
-    image: node/dms-pms:0.0.1.RELEASE
-    build: .
+    image: ghcr.io/dsm-dms/pms-backend-v1-2:latest
     ports:
       - 3000:3000
     env_file:
