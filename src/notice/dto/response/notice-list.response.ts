@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class NoticeListResponse {
+export class NoticeList {
   @ApiProperty({ example: "notice-id" })
   id: number;
 
@@ -12,4 +12,9 @@ export class NoticeListResponse {
 
   @ApiProperty({ example: "신**" })
   writer: string;
+}
+
+export class NoticeListResponse {
+  notices: NoticeList[];
+  total_page: number;
 }

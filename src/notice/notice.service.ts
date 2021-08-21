@@ -1,14 +1,12 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Inject,
-  Injectable,
-} from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { Notice } from "./entity/notice.entity";
 import { Comment } from "./comment/comment.entity";
 import { NoticeRepository } from "./entity/notice.repository";
 import { CommentRepository } from "./comment/comment.repository";
-import { NoticeListResponse } from "./dto/response/notice-list.response";
+import {
+  NoticeList,
+  NoticeListResponse,
+} from "./dto/response/notice-list.response";
 import { NoticeInfoResponse } from "./dto/response/notice-info.response";
 import { NoticeCommentResponse } from "./dto/response/notice-comment.response";
 import { NoticeCommentRequest } from "./dto/request/notice-comment.request";
@@ -22,14 +20,31 @@ export class NoticeService {
     private commentRepository: CommentRepository,
     @Inject(PARENT_SERVICE_TOKEN)
     private userService: ParentService,
-  ) {}
+  ) {
+    this.noticeRepository
+      .find({ type: "COMMON" })
+      .then((n) => (this.noticeLength = n.length));
+    this.noticeRepository
+      .find({ type: "NEWS" })
+      .then((n) => (this.noticeNewsLength = n.length));
+  }
+
+  private noticeLength: number;
+  private noticeNewsLength: number;
 
   // 공지사항
-  public getNoticeList(
+  public async getNoticeList(
     page: number,
     size: number,
-  ): Promise<NoticeListResponse[]> {
-    return this.noticeRepository.findAllNotice(page, size);
+  ): Promise<NoticeListResponse> {
+    const notices: NoticeList[] = await this.noticeRepository.findAllNotice(
+      page,
+      size,
+    );
+    return {
+      notices,
+      total_page: Math.ceil(this.noticeLength / size),
+    };
   }
 
   public async getNoticeInfo(notice_id: number): Promise<NoticeInfoResponse> {
@@ -43,9 +58,7 @@ export class NoticeService {
     };
   }
 
-  public async getNoticeBySearch(
-    keyword: string,
-  ): Promise<NoticeListResponse[]> {
+  public async getNoticeBySearch(keyword: string): Promise<NoticeList[]> {
     if (!keyword) {
       throw new BadRequestException("Invalid Parameter");
     }
@@ -53,14 +66,21 @@ export class NoticeService {
   }
 
   // 가정통신문
-  public getNoticeNewsList(
+  public async getNoticeNewsList(
     page: number,
     size: number,
-  ): Promise<NoticeListResponse[]> {
-    return this.noticeRepository.findAllNoticeNews(page, size);
+  ): Promise<NoticeListResponse> {
+    const notices: NoticeList[] = await this.noticeRepository.findAllNoticeNews(
+      page,
+      size,
+    );
+    return {
+      notices,
+      total_page: Math.ceil(this.noticeNewsLength / size),
+    };
   }
 
-  public getNoticeNewsBySearch(keyword: string): Promise<NoticeListResponse[]> {
+  public async getNoticeNewsBySearch(keyword: string): Promise<NoticeList[]> {
     if (!keyword) {
       throw new BadRequestException("Invalid Parameter");
     }

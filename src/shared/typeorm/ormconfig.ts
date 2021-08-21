@@ -24,7 +24,7 @@ const connectionOptions: DBConnectionOptions = {
     username: process.env.DEVELOPMENT_DATABASE_USER,
     password: process.env.DEVELOPMENT_DATABASE_PASSWORD,
     database: process.env.DEVELOPMENT_DATABASE_NAME,
-    synchronize: true,
+    synchronize: false,
     logging: true,
     entities: [
       Meal,
@@ -44,7 +44,7 @@ const connectionOptions: DBConnectionOptions = {
     password: process.env.PRODUCTION_DATABASE_PASSWORD,
     database: process.env.PRODUCTION_DATABASE_NAME,
     synchronize: false,
-    logging: true,
+    logging: false,
     entities: [
       Meal,
       ParentEntity,
