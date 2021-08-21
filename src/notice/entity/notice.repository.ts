@@ -1,5 +1,5 @@
 import { EntityRepository, getCustomRepository, Repository } from "typeorm";
-import { NoticeListResponse } from "../dto/response/notice-list.response";
+import { NoticeList } from "../dto/response/notice-list.response";
 import { Notice } from "./notice.entity";
 
 @EntityRepository(Notice)
@@ -9,16 +9,13 @@ export class NoticeRepository extends Repository<Notice> {
   }
 
   // 공지사항
-  public findAllNotice(
-    page: number,
-    size: number,
-  ): Promise<NoticeListResponse[]> {
+  public findAllNotice(page: number, size: number): Promise<NoticeList[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .addSelect("notice.writer")
-      .offset(page * 6)
+      .offset(page * size)
       .limit(size)
       .where("notice.type = 'COMMON'")
       .orderBy("notice.upload-date", "DESC")
@@ -39,7 +36,7 @@ export class NoticeRepository extends Repository<Notice> {
       .getOne();
   }
 
-  public findByKeyword(keyword: string): Promise<NoticeListResponse[]> {
+  public findByKeyword(keyword: string): Promise<NoticeList[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
@@ -52,23 +49,20 @@ export class NoticeRepository extends Repository<Notice> {
   }
 
   // 가정통신문
-  public findAllNoticeNews(
-    page: number,
-    size: number,
-  ): Promise<NoticeListResponse[]> {
+  public findAllNoticeNews(page: number, size: number): Promise<NoticeList[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .addSelect("notice.writer")
-      .offset(page * 6)
+      .offset(page * size)
       .limit(size)
       .where("notice.type = 'NEWS'")
       .orderBy("notice.upload-date", "DESC")
       .getMany();
   }
 
-  public findByNewsKeyword(keyword: string): Promise<NoticeListResponse[]> {
+  public findByNewsKeyword(keyword: string): Promise<NoticeList[]> {
     return this.createQueryBuilder("notice")
       .select("notice.id")
       .addSelect("notice.upload-date")
