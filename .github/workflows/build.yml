@@ -25,4 +25,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/jeongjiwoo0522/pms-backend:latest
+          tags: ghcr.io/dsm-dms/pms-backend-v1-2:latest
