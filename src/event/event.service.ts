@@ -3,6 +3,7 @@ import {
   ForbiddenException,
   Inject,
   Injectable,
+  Logger,
 } from "@nestjs/common";
 import { Meal } from "./meal/entity/meal.entity";
 import { MealRepository } from "./meal/entity/meal.repository";
@@ -13,17 +14,24 @@ import { DmsService, MealList } from "../shared/dms/interface";
 import { DMS_SERVICE_TOKEN } from "../shared/dms/dms.module";
 import { ParentService } from "../shared/parent/interface";
 import { PARENT_SERVICE_TOKEN } from "../shared/parent/parent.module";
+import { ImageModule } from "../shared/image/image.module";
+import { MealImageUploader } from "./meal/uploader/meal-image-uploader";
+import { Connection, QueryRunner } from "typeorm";
 
 @Injectable()
 export class EventService {
   constructor(
     private mealRepository: MealRepository,
+    private connection: Connection,
 
     @Inject(PARENT_SERVICE_TOKEN)
     private parentService: ParentService,
 
     @Inject(DMS_SERVICE_TOKEN)
     private dmsMealService: DmsService,
+
+    @Inject(ImageModule.LOCAL_IMAGE_UPLOADER)
+    private imageUploader: MealImageUploader,
   ) {}
 
   private typeList: string[] = ["breakfast", "lunch", "dinner"];
@@ -40,6 +48,9 @@ export class EventService {
       await this.mealRepository.getOneByDatetimeWithPicture(datetime);
     if (!response) {
       throw new BadRequestException("Not found meal data");
+    }
+    if (/https:\/\/dsmhs\.djsch\.kr/g.test(response.breakfast as string)) {
+      this.uploadMealImage(response, datetime);
     }
     return response;
   }
@@ -94,5 +105,28 @@ export class EventService {
 
   public async deleteOneByDatetime(datetime: string) {
     return await this.mealRepository.delete({ datetime });
+  }
+
+  private async uploadMealImage(response: MealResponse, datetime: string) {
+    const meal: Meal = await this.mealRepository.findOne({ datetime });
+    const queryRunner: QueryRunner = this.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      this.imageUploader.meal = meal;
+      this.imageUploader.entityManager = queryRunner.manager;
+      for (const k of Object.keys(response)) {
+        const type: string = k + "_img";
+        this.imageUploader.filePath = meal[type];
+        this.imageUploader.type = type;
+        await this.imageUploader.toLocalFile();
+      }
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      Logger.error(err);
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
   }
 }

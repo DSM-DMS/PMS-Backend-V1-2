@@ -16,13 +16,4 @@ export class Meal {
 
   @Column({ default: "" })
   dinner_img: string;
-
-  @Column({ default: "" })
-  breakfast_list: string;
-
-  @Column({ default: "" })
-  lunch_list: string;
-
-  @Column({ default: "" })
-  dinner_list: string;
 }
