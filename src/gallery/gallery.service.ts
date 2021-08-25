@@ -44,7 +44,8 @@ export class GalleryService {
           ...gallery,
           thumbnail: gallery.thumbnail && gallery.thumbnail.file_name,
         })),
-      totalLength: this.galleryTotalLength,
+      total_length: this.galleryTotalLength,
+      total_page: Math.ceil(this.galleryTotalLength / size)
     };
   }
 
