@@ -19,5 +19,6 @@ export class GalleryList {
 
 export class GalleryListResponse {
   galleries: GalleryList[];
-  totalLength: number;
+  total_length: number;
+  total_page: number;
 }
