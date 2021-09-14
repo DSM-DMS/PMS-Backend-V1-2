@@ -58,7 +58,7 @@ export class NoticeService {
     };
   }
 
-  public async getNoticeBySearch(keyword: string): Promise<NoticeList[]> {
+  public async searchNoticeByKeyword(keyword: string): Promise<NoticeList[]> {
     if (!keyword) {
       throw new BadRequestException("Invalid Parameter");
     }
@@ -80,7 +80,7 @@ export class NoticeService {
     };
   }
 
-  public async getNoticeNewsBySearch(keyword: string): Promise<NoticeList[]> {
+  public async searchNoticeNewsByKeyword(keyword: string): Promise<NoticeList[]> {
     if (!keyword) {
       throw new BadRequestException("Invalid Parameter");
     }

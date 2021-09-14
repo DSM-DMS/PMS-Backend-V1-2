@@ -67,7 +67,7 @@ export class NoticeController {
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
   getNoticeBySearch(@Query("q") keyword: string) {
-    return this.noticeService.getNoticeBySearch(keyword);
+    return this.noticeService.searchNoticeByKeyword(keyword);
   }
 
   @Get("/news")
@@ -105,7 +105,7 @@ export class NoticeController {
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
   getNoticeNewsBySearch(@Query("q") keyword: string) {
-    return this.noticeService.getNoticeNewsBySearch(keyword);
+    return this.noticeService.searchNoticeNewsByKeyword(keyword);
   }
 
   @Get("/:notice_id")
