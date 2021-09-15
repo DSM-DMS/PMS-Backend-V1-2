@@ -75,6 +75,11 @@ export class NoticeController {
     return this.noticeService.searchNoticeByContent(content);
   }
 
+  @Get("/search/all")
+  searchNoticeByAll(@Query("q") content: string) {
+    return this.noticeService.searchNoticeByAll(content);
+  }
+
   @Get("/news")
   @ApiOperation({
     summary: "가정통신문 목록 API",
@@ -116,6 +121,11 @@ export class NoticeController {
   @Get("/news/search/content")
   searchNoticeNewsByContent(@Query("q") content: string) {
     return this.noticeService.searchNoticeNewsByContent(content);
+  }
+
+  @Get("/news/search/all")
+  searchNoticeNewsByAll(@Query("q") content: string) {
+    return this.noticeService.searchNoticeNewsByAll(content);
   }
 
   @Get("/:notice_id")

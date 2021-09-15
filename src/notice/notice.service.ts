@@ -72,6 +72,13 @@ export class NoticeService {
     return this.noticeRepository.findByContent(content);
   }
 
+  public async searchNoticeByAll(param: string) {
+    if (!param) {
+      throw new BadRequestException("Invalid Parameter");
+    }
+    return this.noticeRepository.findByAll(param);
+  }
+
   // 가정통신문
   public async getNoticeNewsList(
     page: number,
@@ -100,7 +107,14 @@ export class NoticeService {
     if (!content) {
       throw new BadRequestException("Invalid Parameter");
     }
-    return this.noticeRepository.findByNewsKeyword(content);
+    return this.noticeRepository.findByNewsContent(content);
+  }
+
+  public async searchNoticeNewsByAll(param: string) {
+    if (!param) {
+      throw new BadRequestException("Invalid Parameter");
+    }
+    return this.noticeRepository.findByNewsAll(param);
   }
 
   public async getLargeComment(
