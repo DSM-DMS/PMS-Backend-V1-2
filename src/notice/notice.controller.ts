@@ -71,11 +71,35 @@ export class NoticeController {
   }
 
   @Get("/search/content")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "내용으로 공지사항 검색 API",
+    description: "해당하는 키워드의 공지사항 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [NoticeList] })
   searchNoticeByContent(@Query("q") content: string) {
     return this.noticeService.searchNoticeByContent(content);
   }
 
   @Get("/search/all")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "제목과 내용으로 공지사항 검색 API",
+    description: "해당하는 키워드의 공지사항 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [NoticeList] })
   searchNoticeByAll(@Query("q") content: string) {
     return this.noticeService.searchNoticeByAll(content);
   }
@@ -119,11 +143,35 @@ export class NoticeController {
   }
 
   @Get("/news/search/content")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "내용으로 가정통신문 검색 API",
+    description: "해당하는 키워드의 가정통신문 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [NoticeList] })
   searchNoticeNewsByContent(@Query("q") content: string) {
     return this.noticeService.searchNoticeNewsByContent(content);
   }
 
   @Get("/news/search/all")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "제목과 내용으로 가정통신문 검색 API",
+    description: "해당하는 키워드의 가정통신문 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [NoticeList] })
   searchNoticeNewsByAll(@Query("q") content: string) {
     return this.noticeService.searchNoticeNewsByAll(content);
   }
