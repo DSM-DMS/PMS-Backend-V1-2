@@ -66,8 +66,42 @@ export class NoticeController {
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeBySearch(@Query("q") keyword: string) {
-    return this.noticeService.getNoticeBySearch(keyword);
+  searchNoticeByKeyword(@Query("q") keyword: string) {
+    return this.noticeService.searchNoticeByKeyword(keyword);
+  }
+
+  @Get("/search/content")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "내용으로 공지사항 검색 API",
+    description: "해당하는 키워드의 공지사항 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [NoticeList] })
+  searchNoticeByContent(@Query("q") content: string) {
+    return this.noticeService.searchNoticeByContent(content);
+  }
+
+  @Get("/search/all")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "제목과 내용으로 공지사항 검색 API",
+    description: "해당하는 키워드의 공지사항 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [NoticeList] })
+  searchNoticeByAll(@Query("q") content: string) {
+    return this.noticeService.searchNoticeByAll(content);
   }
 
   @Get("/news")
@@ -104,8 +138,42 @@ export class NoticeController {
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeNewsBySearch(@Query("q") keyword: string) {
-    return this.noticeService.getNoticeNewsBySearch(keyword);
+  searchNoticeNewsByKeyword(@Query("q") keyword: string) {
+    return this.noticeService.searchNoticeNewsByKeyword(keyword);
+  }
+
+  @Get("/news/search/content")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "내용으로 가정통신문 검색 API",
+    description: "해당하는 키워드의 가정통신문 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [NoticeList] })
+  searchNoticeNewsByContent(@Query("q") content: string) {
+    return this.noticeService.searchNoticeNewsByContent(content);
+  }
+
+  @Get("/news/search/all")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "제목과 내용으로 가정통신문 검색 API",
+    description: "해당하는 키워드의 가정통신문 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [NoticeList] })
+  searchNoticeNewsByAll(@Query("q") content: string) {
+    return this.noticeService.searchNoticeNewsByAll(content);
   }
 
   @Get("/:notice_id")
