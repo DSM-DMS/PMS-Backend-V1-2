@@ -48,6 +48,18 @@ export class NoticeRepository extends Repository<Notice> {
       .getMany();
   }
 
+  public findByContent(content: string): Promise<NoticeList[]> {
+    return this.createQueryBuilder("notice")
+      .select("notice.id")
+      .addSelect("notice.upload-date")
+      .addSelect("notice.title")
+      .addSelect("notice.writer")
+      .where("notice.type = 'COMMON'")
+      .andWhere(`notice.body like '%${content}%'`)
+      .orderBy("notice.upload-date", "DESC")
+      .getMany();
+  }
+
   // 가정통신문
   public findAllNoticeNews(page: number, size: number): Promise<NoticeList[]> {
     return this.createQueryBuilder("notice")
@@ -70,6 +82,18 @@ export class NoticeRepository extends Repository<Notice> {
       .addSelect("notice.writer")
       .where("notice.type = 'NEWS'")
       .andWhere(`notice.title like '%${keyword}%'`)
+      .orderBy("notice.upload-date", "DESC")
+      .getMany();
+  }
+
+  public findByNewsContent(content: string): Promise<NoticeList[]> {
+    return this.createQueryBuilder("notice")
+      .select("notice.id")
+      .addSelect("notice.upload-date")
+      .addSelect("notice.title")
+      .addSelect("notice.writer")
+      .where("notice.type = 'NEWS'")
+      .andWhere(`notice.body like '%${content}%'`)
       .orderBy("notice.upload-date", "DESC")
       .getMany();
   }
