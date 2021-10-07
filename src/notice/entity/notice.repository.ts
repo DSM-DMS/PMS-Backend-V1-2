@@ -59,6 +59,7 @@ export class NoticeRepository extends Repository<Notice> {
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .addSelect("notice.writer")
+      .addSelect("notice.body")
       .where("notice.type = 'COMMON'")
       .andWhere(`notice.body like '%${content}%'`)
       .orderBy("notice.upload-date", "DESC")
@@ -71,6 +72,7 @@ export class NoticeRepository extends Repository<Notice> {
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .addSelect("notice.writer")
+      .addSelect("notice.body")
       .where("notice.type = 'COMMON'")
       .andWhere(
         new Brackets((qb) => {
@@ -115,6 +117,7 @@ export class NoticeRepository extends Repository<Notice> {
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .addSelect("notice.writer")
+      .addSelect("notice.body")
       .where("notice.type = 'NEWS'")
       .andWhere(`notice.body like '%${content}%'`)
       .orderBy("notice.upload-date", "DESC")
@@ -127,6 +130,7 @@ export class NoticeRepository extends Repository<Notice> {
       .addSelect("notice.upload-date")
       .addSelect("notice.title")
       .addSelect("notice.writer")
+      .addSelect("notice.body")
       .where("notice.type = 'NEWS'")
       .andWhere(
         new Brackets((qb) => {

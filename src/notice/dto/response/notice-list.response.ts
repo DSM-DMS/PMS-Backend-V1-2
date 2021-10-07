@@ -12,6 +12,9 @@ export class NoticeList {
 
   @ApiProperty({ example: "신**" })
   writer: string;
+
+  @ApiProperty({ example: "2학기 시간표입니다.", nullable: true })
+  body?: string;
 }
 
 export class NoticeListResponse {
