@@ -24,4 +24,15 @@ export class GalleryRepository extends Repository<Gallery> {
       .where("gallery.id = :id", { id: gallery_id })
       .getOne();
   }
+
+  public findByKeyword(keyword: string): Promise<Gallery[]> {
+    return this.createQueryBuilder("gallery")
+      .select("gallery.id")
+      .addSelect("gallery.upload-date")
+      .addSelect("gallery.title")
+      .leftJoinAndMapMany("gallery.thumbnail", "gallery.attach", "attach")
+      .where(`gallery.title like '%${keyword}%'`)
+      .orderBy("gallery.upload-date", "DESC")
+      .getMany();
+  }
 }
