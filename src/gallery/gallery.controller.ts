@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   BadRequestException,
+  UseGuards,
 } from "@nestjs/common";
 import {
   ApiOperation,
@@ -13,6 +14,7 @@ import {
   ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
+import { AuthGuard } from "src/shared/authentication/auth.guard";
 import { GalleryInfo } from "./dto/response/gallery-info.response";
 import { GalleryList } from "./dto/response/gallery-list.response";
 import { GalleryService } from "./gallery.service";
@@ -56,5 +58,25 @@ export class GalleryController {
     gallery_id: number,
   ) {
     return this.galleryService.getGalleryInfo(gallery_id);
+  }
+
+  @Get("/search")
+  @UseGuards(new AuthGuard())
+  @ApiOperation({
+    summary: "사진앨범 검색 API",
+    description: "해당하는 키워드의 사진앨범 목록을 객체로 반환",
+  })
+  @ApiQuery({
+    name: "q",
+    type: String,
+    required: true,
+    description: "검색할 키워드",
+  })
+  @ApiResponse({ status: 200, type: [GalleryList] })
+  @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
+  @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
+  @ApiResponse({ status: 403, description: "접근 권한 없음" })
+  public searchGallery(@Query("q") keyword: string) {
+    return this.searchGallery(keyword);
   }
 }
