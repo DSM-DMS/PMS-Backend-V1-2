@@ -7,7 +7,7 @@ import {
 import { Connection, QueryRunner } from "typeorm";
 import { ImageModule } from "../shared/image/image.module";
 import { GalleryInfoResponse } from "./dto/response/gallery-info.response";
-import { GalleryListResponse } from "./dto/response/gallery-list.response";
+import { GalleryList, GalleryListResponse } from "./dto/response/gallery-list.response";
 import { Gallery } from "./entity/gallery.entity";
 import { GalleryRepository } from "./entity/gallery.repository";
 import { GalleryImageUplodaer } from "./uploader/gallery-image.uploader";
@@ -68,6 +68,15 @@ export class GalleryService {
         thumbnail: gallery.thumbnail.file_name,
       },
     };
+  }
+  
+  public async searchGallery(keyword: string): Promise<GalleryList[]> {
+    const galleries: Gallery[] = await this.galleryRepository.findByKeyword(keyword);
+    return galleries
+      .map((gallery: Gallery) => ({
+        ...gallery,
+        thumbnail: gallery.thumbnail && gallery.thumbnail.file_name,
+    }));
   }
 
   private async uploadGalleryImage(gallery: Gallery) {
