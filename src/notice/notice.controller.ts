@@ -2,6 +2,9 @@ import {
   Body,
   Controller,
   Get,
+  Head,
+  Header,
+  Headers,
   Param,
   ParseIntPipe,
   Post,
@@ -188,8 +191,8 @@ export class NoticeController {
   @ApiResponse({ status: 400, description: "잘못된 요청. 요청 값 확인" })
   @ApiResponse({ status: 401, description: "인증 정보가 유효하지 않음" })
   @ApiResponse({ status: 403, description: "접근 권한 없음" })
-  getNoticeInfo(@Param("notice_id", new ParseIntPipe()) notice_id: number, @Req() req: Request) {
-    console.log(req.headers["Authorization"]);
+  getNoticeInfo(@Param("notice_id", new ParseIntPipe()) notice_id: number, @Headers("Authorization") req: string) {
+    console.log(req);
     return this.noticeService.getNoticeInfo(notice_id);
   }
 
