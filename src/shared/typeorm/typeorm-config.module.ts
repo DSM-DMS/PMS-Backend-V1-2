@@ -6,7 +6,7 @@ import { connectionOptions } from "./ormconfig";
   imports: [
     TypeOrmModule.forRoot(connectionOptions[process.env.NODE_ENV]),
     TypeOrmModule.forRoot(connectionOptions["dms"]),
-    //TypeOrmModule.forRoot(connectionOptions["ddyzd"]),
+    TypeOrmModule.forRoot(connectionOptions["ddyzd"]),
   ],
 })
 export class TypeOrmConfigModule {}
