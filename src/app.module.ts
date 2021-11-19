@@ -16,7 +16,7 @@ import { ImageModule } from "./shared/image/image.module";
     EventModule,
     CalendarModule,
     NoticeModule,
-    //IntroduceModule,
+    IntroduceModule,
     GalleryModule,
     ImageModule,
   ],
