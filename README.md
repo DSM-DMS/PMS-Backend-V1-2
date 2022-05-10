@@ -1,9 +1,5 @@
 # PMS-Backend-V1-2
 
-![pms](http://211.38.86.92/media/pms/static/pms.png)
-
-
-
 ### 프로젝트 목표
 
 ___
